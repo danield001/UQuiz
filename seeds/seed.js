@@ -1,15 +1,19 @@
 const sequelize = require('../config/connection');
-const seedQuestion = require('./questionData');
-const seedCategory = require('./categoryData');
+const { Category, Question, QuestionTag, Tag, User } = require('../models');
 
-const seedAll = async () => {
+const categorySeedData = require('./categorySeedData.json');
+const questionSeedData = require('./questionSeedData.json');
+
+const seedDatabase = async () => {
   await sequelize.sync({ force: true });
 
-  await seedQuestion();
+  const questions = await Question.bulkCreate(questionSeedData);
+  
+  const categories = await Category.bulkCreate(categorySeedData);
 
-  await seedCategory();
+  const tags = await Tag.bulkCreate(tagSeedData);
 
-//   await seedUser();
+  const users = await User.bulkCreate(userSeedData);
 
   process.exit(0);
 };

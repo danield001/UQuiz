@@ -3,7 +3,7 @@ const Question = require('./Question');
 const Category = require('./Category');
 const Tag = require('./Tag');
 const User = require('./User');
-const Question_tag = require('./Question_tag');
+const Question_tag = require('./QuestionTag');
 
 //Set up associations between models
 //Define a question having one category to create a foreign key in the 'category table'
