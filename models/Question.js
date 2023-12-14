@@ -16,7 +16,17 @@ Question.init(
         question_body: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        answer_body: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        category_id: {
         }
+// ADD
+//Used_by_id
+// created_by_id
+
     },
     {
         sequelize,
