@@ -16,24 +16,47 @@ Category.belongsTo(Question, {
     foreignKey: 'question_id',
 });
 
-Question.hasMany(Tag {
-    foreignKey: 'question_id',
+Question.belongsToMany(Tag, {
+    //Define the third table needed to store the foreign keys
+    through: {
+        model: Question_tag,
+        unique: true
+    },
+    //Define alias for when data is retrieved
+    as: 'tags'
+});
+
+Tag.belongsToMany(Question, {
+    //Define third table to store foreign keys
+    through: {
+        model: Question_tag,
+        unique: true
+    },
+    //alias for when data is retrieved
+    as: 'questions'
+})
+
+//Associations for User to Question Model
+Question.hasMany(User, {
+    foreignKey: 'used_by',
     onDelete: 'CASCADE',
 });
 
-//user model for 
-User.hasMany(Question, {
-
+User.belongsTo(Question, {
+    foreignKey: 'used_by',
 })
 
-Tag.belongsToMany(Question, {
-    through: {
-        model: Question_tag,
-        unique: false
-    },
-    //define the alias for when data is retreived
-    as: 'tags'
+Question.hasMany(User, {
+    foreignKey: 'created_by',
 });
+
+User.belongsTo(Question, {
+    foreignKey: 'created_by',
+})
+
+
+
+
 
 
 
