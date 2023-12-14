@@ -20,7 +20,6 @@ Question.belongsToMany(Tag, {
     //Define the third table needed to store the foreign keys
     through: {
         model: Question_tag,
-        unique: true
     },
     //Define alias for when data is retrieved
     as: 'tags'
@@ -30,7 +29,6 @@ Tag.belongsToMany(Question, {
     //Define third table to store foreign keys
     through: {
         model: Question_tag,
-        unique: true
     },
     //alias for when data is retrieved
     as: 'questions'
@@ -53,12 +51,6 @@ Question.hasMany(User, {
 User.belongsTo(Question, {
     foreignKey: 'created_by',
 })
-
-
-
-
-
-
 
 
 
