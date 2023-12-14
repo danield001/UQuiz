@@ -54,5 +54,5 @@ User.belongsTo(Question, {
 
 
 
-module.exports = { Question, Category, Tag, Question_tag };
+module.exports = { Question, Category, Tag, Question_tag, User };
 

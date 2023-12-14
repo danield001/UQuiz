@@ -21,12 +21,29 @@ Question.init(
             type: DataTypes.STRING,
             allowNull: false
         },
+        //This column will store a reference of the id of the category that classifies this question.
         category_id: {
-        }
-// ADD
-//Used_by_id
-// created_by_id
-
+            type: DataTypes.INTEGER,
+            references: {
+                model: 'category',
+                key: 'id',
+            },
+        },
+        used_by_id: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: 'user',
+                key:'id',
+            },
+        },
+        //This one also refers to the user id but for the purpose of storing who created the question.
+        created_by_id: {
+            type: DataTypes.INTEGER,
+            references: { 
+            model: 'user',
+            key: 'id',
+            },
+        },
     },
     {
         sequelize,
