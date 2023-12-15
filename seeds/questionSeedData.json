@@ -1,10 +1,24 @@
 [
   {
     "question_body": "What two colours make green when painting?",
-    "answer_body": "yellow and blue"
+    "answer_body": "yellow and blue",
+    "category_id": 2,
+    "used_by_id": "3",
+    "created_by_id": 1
   },
   {
     "question_body": "Who is the current Prime Minister of Australia?",
-    "answer_body": "Anthony Albanese"
+    "answer_body": "Anthony Albanese",
+    "category_id": 1,
+    "used_by_id": "2",
+    "created_by_id": 1
+  },
+  {
+    "question_body": "What is the name of a cyclone that hit QLD in 2023?",
+    "answer_body": "Cyclone Jasper",
+    "category_id": 1,
+    "used_by_id": "2",
+    "created_by_id": 3
   }
 ]
+

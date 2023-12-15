@@ -11,7 +11,7 @@ Question_tag.init(
             type: DataTypes.INTEGER,
             allowNull: true,
             primaryKey: true,
-            autoIncrement: true
+            autoIncrement: true,
         },
         question_id: {
             type: DataTypes.INTEGER,

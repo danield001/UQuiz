@@ -11,15 +11,15 @@ Question.init(
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
-            autoIncrement: true
+            autoIncrement: true,
         },
         question_body: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
         },
         answer_body: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
         },
         //This column will store a reference of the id of the category that classifies this question.
         category_id: {

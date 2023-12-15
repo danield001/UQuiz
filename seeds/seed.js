@@ -7,17 +7,23 @@ const tagSeedData = require('./tagSeedData.json');
 const userSeedData = require('./userSeedData');
 
 const seedDatabase = async () => {
-  await sequelize.sync({ force: true });
+  try {
+    await sequelize.sync({ force: true });
 
-  const questions = await Question.bulkCreate(questionSeedData);
+    const categories = await Category.bulkCreate(categorySeedData);
+    console.log('Categories seeded suxxessfully.');
+    const questions = await Question.bulkCreate(questionSeedData);
+    console.log('Questions seeded successfully.');
+    // const tags = await Tag.bulkCreate(tagSeedData);
   
-  const categories = await Category.bulkCreate(categorySeedData);
-
-  const tags = await Tag.bulkCreate(tagSeedData);
-
-  const users = await User.bulkCreate(userSeedData);
-
-  process.exit(0);
+    // const users = await User.bulkCreate(userSeedData);
+    console.log('Database seeded successfully.');
+    process.exit(0);
+  
+  } catch (error) {
+    console.error('Error seeding database:', error);
+    process.exit(1);
+  }
 };
 
 seedDatabase();
