@@ -36,14 +36,7 @@ Question.init(
                 key:'id',
             },
         },
-        //This one also refers to the user id but for the purpose of storing who created the question.
-        created_by_id: {
-            type: DataTypes.INTEGER,
-            references: { 
-            model: 'user',
-            key: 'id',
-            },
-        },
+
     },
     {
         sequelize,

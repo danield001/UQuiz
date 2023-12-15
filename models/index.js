@@ -44,12 +44,12 @@ User.belongsTo(Question, {
     foreignKey: 'used_by',
 })
 
-Question.hasMany(User, {
-    foreignKey: 'created_by',
+Question.belongsTo(User, {
+    foreignKey: 'created_by_id',
 });
 
-User.belongsTo(Question, {
-    foreignKey: 'created_by',
+User.hasMany(Question, {
+    foreignKey: 'created_by_id',
 })
 
 
