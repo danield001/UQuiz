@@ -1,11 +1,11 @@
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/connection');
+const sequelize = require('..config/connection');
 
-//create Question_tag model
-class Question_tag extends Model {}
+//create Used_question model
+class Used_question extends Model {}
 
-//create fields/columns for Question_tag model
-Question_tag.init(
+//create fields/columns for Used_question model
+Used_question.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -21,10 +21,10 @@ Question_tag.init(
                 unique: false
             }
         },
-        tag_id: {
+        user_id: {
             type: DataTypes.INTEGER,
             references: {
-                model: 'tag',
+                model: 'user',
                 key: 'id',
                 unique: false
             }
@@ -35,8 +35,6 @@ Question_tag.init(
         timestamps: false,
         freezeTableName: true,
         underscored: true,
-        modelName: 'question_tag'
+        modelName: 'used_question'
     }
 );
-
-module.exports = Question_tag;

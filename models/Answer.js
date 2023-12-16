@@ -1,31 +1,31 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-//create Question_tag model
-class Question_tag extends Model {}
+//create Answer model
+class Answer extends Model {}
 
-//create fields/columns for Question_tag model
-Question_tag.init(
+//create fields/columns for Answer model
+Answer.init(
     {
         id: {
             type: DataTypes.INTEGER,
-            allowNull: true,
+            allowNull: false,
             primaryKey: true,
             autoIncrement: true,
         },
         question_id: {
             type: DataTypes.INTEGER,
             references: {
-                model: 'question',
-                key: 'id',
+                model: "question",
+                key: "id",
                 unique: false
             }
         },
-        tag_id: {
+        user_id: {
             type: DataTypes.INTEGER,
             references: {
-                model: 'tag',
-                key: 'id',
+                model: "user",
+                key: "id",
                 unique: false
             }
         },
@@ -35,8 +35,8 @@ Question_tag.init(
         timestamps: false,
         freezeTableName: true,
         underscored: true,
-        modelName: 'question_tag'
+        modelName: 'answer'
     }
 );
 
-module.exports = Question_tag;
+module.exports = Answer;

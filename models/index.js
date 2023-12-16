@@ -4,25 +4,29 @@ const Category = require('./Category');
 const Tag = require('./Tag');
 const User = require('./User');
 const Question_tag = require('./QuestionTag');
+const Answer = require('./Answer');
+const Used_question = require('./UsedQuestion');
 
 //Set up associations between models
 //Define a question having one category to create a foreign key in the 'category table'
-Question.hasOne(Category, {
-    foreignKey: 'question_id',
-    onDelete: 'CASCADE',
-});
-
-Category.belongsTo(Question, {
+//Category has many questions, and if you delete category, you delete the associated questions
+Question.belongsTo(Category, {
     foreignKey: 'question_id',
 });
 
+Category.hasMany(Question, {
+    foreignKey: 'question_id',
+    onDelete: 'CASCADE'
+});
+
+//One questions belongs to many users who have used it, and 
 Question.belongsToMany(Tag, {
     //Define the third table needed to store the foreign keys
     through: {
         model: Question_tag,
     },
     //Define alias for when data is retrieved
-    as: 'tags'
+    as: 'questions'
 });
 
 Tag.belongsToMany(Question, {
@@ -31,28 +35,39 @@ Tag.belongsToMany(Question, {
         model: Question_tag,
     },
     //alias for when data is retrieved
-    as: 'questions'
+    as: 'tags'
 })
 
 //Associations for User to Question Model
-Question.hasMany(User, {
-    foreignKey: 'used_by',
-    onDelete: 'CASCADE',
+Question.belongsToMany(User, {
+    through: {
+        model: Used_question,
+    },
+    //alias showing the used_questions for each user 
+    as: 'used_questions'
 });
 
-User.belongsTo(Question, {
-    foreignKey: 'used_by',
+User.belongsToMany(Question, {
+    through: {
+        model: Used_question,
+    },
+    //alias showing the users of each question
+    as: 'users' 
+    
 })
 
+//For tracking who created question so they don't get asked that one
+//User has many questions and if user is deleted, so are their questions
 Question.belongsTo(User, {
-    foreignKey: 'created_by_id',
+    foreignKey: 'created_question_id',
 });
 
 User.hasMany(Question, {
-    foreignKey: 'created_by_id',
+    foreignKey: 'created_question_id',
+    onDelete: 'CASCADE'
 })
 
 
 
-module.exports = { Question, Category, Tag, Question_tag, User };
+module.exports = { Question, Category, Tag, Question_tag, User, Answer, Used_question };
 
