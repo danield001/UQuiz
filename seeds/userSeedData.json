@@ -2,16 +2,19 @@
     {
         "username": "RhettH20",
         "email_address": "rhettH20@gmail.com",
-        "password": "#1bongoDrumRockStar"
+        "password": "#1bongoDrumRockStar",
+        "questions_created": 1
     },
     {
         "username": "Jerry8",
         "email_address": "jerry9@gmail.com",
-        "password": "22childrenAnd1ontheway"
+        "password": "22childrenAnd1ontheway",
+        "questions_created": 2
     },
     {
         "username": "OliveB",
         "email_address": "oliveBranch@hotmail.com",
-        "password": "peaceMan11"
+        "password": "peaceMan11",
+        "questions_created": 3
     }
 ]

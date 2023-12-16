@@ -4,19 +4,18 @@ const Category = require('./Category');
 const Tag = require('./Tag');
 const User = require('./User');
 const Question_tag = require('./QuestionTag');
-const Answer = require('./Answer');
 const Used_question = require('./UsedQuestion');
 
 //Set up associations between models
 //Define a question having one category to create a foreign key in the 'category table'
 //Category has many questions, and if you delete category, you delete the associated questions
-Question.belongsTo(Category, {
+Question.hasOne(Category, {
     foreignKey: 'question_id',
+    onDelete: 'CASCADE',
 });
 
-Category.hasMany(Question, {
+Category.belongsTo(Question, {
     foreignKey: 'question_id',
-    onDelete: 'CASCADE'
 });
 
 //One questions belongs to many users who have used it, and 
@@ -69,5 +68,5 @@ User.hasMany(Question, {
 
 
 
-module.exports = { Question, Category, Tag, Question_tag, User, Answer, Used_question };
+module.exports = { Question, Category, Tag, Question_tag, User, Used_question };
 

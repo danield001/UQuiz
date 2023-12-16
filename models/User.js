@@ -38,7 +38,7 @@ User.init(
             },
         },
         //This one also refers to the user id but for the purpose of storing who created the question.
-        created_by_id: {
+        questions_created: {
             type: DataTypes.INTEGER,
             references: { 
             model: 'question',

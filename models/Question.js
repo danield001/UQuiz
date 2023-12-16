@@ -17,11 +17,11 @@ Question.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        answer_body: {
+        answer: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        //This column will store a reference of the id of the category that classifies this question.
+        //This column will store a reference of the category_id for each question.
         category_id: {
             type: DataTypes.INTEGER,
             references: {
@@ -29,14 +29,6 @@ Question.init(
                 key: 'id',
             },
         },
-        used_by_id: {
-            type: DataTypes.INTEGER,
-            references: {
-                model: 'user',
-                key:'id',
-            },
-        },
-
     },
     {
         sequelize,
