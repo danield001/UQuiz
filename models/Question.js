@@ -11,17 +11,17 @@ Question.init(
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
-            autoIncrement: true
+            autoIncrement: true,
         },
         question_body: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
         },
-        answer_body: {
+        answer: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
         },
-        //This column will store a reference of the id of the category that classifies this question.
+        //This column will store a reference of the questions in the category model
         category_id: {
             type: DataTypes.INTEGER,
             references: {
@@ -29,19 +29,11 @@ Question.init(
                 key: 'id',
             },
         },
-        used_by_id: {
+        created_by_user_id: {
             type: DataTypes.INTEGER,
             references: {
                 model: 'user',
-                key:'id',
-            },
-        },
-        //This one also refers to the user id but for the purpose of storing who created the question.
-        created_by_id: {
-            type: DataTypes.INTEGER,
-            references: { 
-            model: 'user',
-            key: 'id',
+                key: 'id',
             },
         },
     },

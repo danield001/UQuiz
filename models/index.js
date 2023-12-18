@@ -1,58 +1,46 @@
 //Import the Model files
+const User = require('./User');
+const Quiz = require('./Quiz');
 const Question = require('./Question');
 const Category = require('./Category');
-const Tag = require('./Tag');
-const User = require('./User');
-const Question_tag = require('./QuestionTag');
 
-//Set up associations between models
-//Define a question having one category to create a foreign key in the 'category table'
-Question.hasOne(Category, {
-    foreignKey: 'question_id',
+// Define associations
+User.hasMany(Quiz, {
+  foreignKey: 'user_id', // foreign key in the Quiz model referring to the User model
+  onDelete: 'CASCADE',
+});
+
+Quiz.belongsTo(User, {
+  foreignKey: 'user_id', // foreign key in the Quiz model referring to the User model
+});
+
+Quiz.belongsToMany(Question, {
+  through: 'QuizQuestion', // You need to create a model for the QuizQuestion association
+  as: 'questions',
+});
+
+Question.belongsToMany(Quiz, {
+  through: 'QuizQuestion', // You need to create a model for the QuizQuestion association
+  as: 'quizzes',
+});
+
+User.hasMany(Question, {
+  foreignKey: 'created_by_user_id', // foreign key in the Question model referring to the User model
+  onDelete: 'CASCADE',
+});
+
+Question.belongsTo(User, {
+  foreignKey: 'created_by_user_id', // foreign key in the Question model referring to the User model
+});
+
+Category.hasMany(Question, {
+    foreignKey: 'category_id', // foreign key in the Question model referring to the Category model
     onDelete: 'CASCADE',
 });
 
-Category.belongsTo(Question, {
-    foreignKey: 'question_id',
+Question.belongsTo(Category, {
+    foreignKey: 'category_id', //foreign key in the Question model referring to the Category model
 });
 
-Question.belongsToMany(Tag, {
-    //Define the third table needed to store the foreign keys
-    through: {
-        model: Question_tag,
-    },
-    //Define alias for when data is retrieved
-    as: 'tags'
-});
 
-Tag.belongsToMany(Question, {
-    //Define third table to store foreign keys
-    through: {
-        model: Question_tag,
-    },
-    //alias for when data is retrieved
-    as: 'questions'
-})
-
-//Associations for User to Question Model
-Question.hasMany(User, {
-    foreignKey: 'used_by',
-    onDelete: 'CASCADE',
-});
-
-User.belongsTo(Question, {
-    foreignKey: 'used_by',
-})
-
-Question.hasMany(User, {
-    foreignKey: 'created_by',
-});
-
-User.belongsTo(Question, {
-    foreignKey: 'created_by',
-})
-
-
-
-module.exports = { Question, Category, Tag, Question_tag, User };
-
+module.exports = { User, Quiz, Question, Category};

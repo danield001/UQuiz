@@ -1,15 +1,17 @@
 [
-    {
+    {   "id": 1,
         "username": "RhettH20",
         "email_address": "rhettH20@gmail.com",
         "password": "#1bongoDrumRockStar"
     },
     {
+        "id": 2,
         "username": "Jerry8",
         "email_address": "jerry9@gmail.com",
         "password": "22childrenAnd1ontheway"
     },
     {
+        "id": 3,
         "username": "OliveB",
         "email_address": "oliveBranch@hotmail.com",
         "password": "peaceMan11"
