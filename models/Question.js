@@ -21,11 +21,18 @@ Question.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        //This column will store a reference of the category_id for each question.
+        //This column will store a reference of the questions in the category model
         category_id: {
             type: DataTypes.INTEGER,
             references: {
                 model: 'category',
+                key: 'id',
+            },
+        },
+        created_by_user_id: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: 'user',
                 key: 'id',
             },
         },

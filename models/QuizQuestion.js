@@ -1,11 +1,11 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('..config/connection');
 
-//create Used_question model
-class Used_question extends Model {}
+//create Quiz model
+class QuizQuestion extends Model {}
 
-//create fields/columns for Used_question model
-Used_question.init(
+//create fields/columns for quiz model
+QuizQuestion.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -21,10 +21,10 @@ Used_question.init(
                 unique: false
             }
         },
-        user_id: {
+        quiz_id: {
             type: DataTypes.INTEGER,
             references: {
-                model: 'user',
+                model: 'quiz',
                 key: 'id',
                 unique: false
             }
@@ -35,6 +35,8 @@ Used_question.init(
         timestamps: false,
         freezeTableName: true,
         underscored: true,
-        modelName: 'used_question'
+        modelName: 'quizQuestion'
     }
 );
+
+module.exports = QuizQuestion;

@@ -37,14 +37,6 @@ User.init(
                 len:[6],
             },
         },
-        //This one also refers to the user id but for the purpose of storing who created the question.
-        questions_created: {
-            type: DataTypes.INTEGER,
-            references: { 
-            model: 'question',
-            key: 'id',
-            },
-        },
     },
     {
         //bcrypt used to encrypt the password before saving

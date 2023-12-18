@@ -5,7 +5,7 @@
     "answer": "yellow and blue",
     "category_id": 2,
     "users": 3,
-    "tags": 8, 
+    "tags": 8
   },
   {
     "id": 2,
@@ -21,7 +21,7 @@
     "answer_body": "Cyclone Jasper",
     "category_id": 1,
     "users": 2,
-    "tags":
+    "tags": 1
   }
 ]
 
