@@ -1,7 +1,9 @@
+const withAuth = require('../../utils/auth');
+
 const router = require('express').Router();
 
 
-router.get('/question/:id', async (req, res) => {
+router.get('/question/:id', withAuth, async (req, res) => {
     try {
         const { id } = req.params; // id needs to equal key!
         const questionDisp = await Questions.findOne({ where: { id } });
@@ -17,7 +19,7 @@ router.get('/question/:id', async (req, res) => {
     }
 });
 
-router.get('/question', async (req, res) => {
+router.get('/question', withAuth, async (req, res) => {
     try {
         const questionDisp = await Questions.findAll();
 
@@ -33,7 +35,7 @@ router.get('/question', async (req, res) => {
     }
 });
 
-router.post('/question', async (req, res) => {
+router.post('/question', withAuth, async (req, res) => {
 
 
 })
