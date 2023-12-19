@@ -3,12 +3,24 @@
         "category_name": "Movies"
     },
     {
-        "category_name": "Sports"
+        "category_name": "Sport"
     },
     {
         "category_name": "Entertainment"
     },
     {
         "category_name": "Music"
+    },
+    {
+        "category_name": "Current Affairs"
+    },
+    {
+        "category_name": "Politics"
+    },
+    {
+        "category_name": "History"
+    },
+    {
+        "category_name": "Geography"
     }
 ]
