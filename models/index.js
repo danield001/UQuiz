@@ -16,12 +16,12 @@ Quiz.belongsTo(User, {
 });
 
 Quiz.belongsToMany(Question, {
-  through: 'QuizQuestion', // You need to create a model for the QuizQuestion association
+  through: 'quizQuestion', // You need to create a model for the QuizQuestion association
   as: 'questions',
 });
 
 Question.belongsToMany(Quiz, {
-  through: 'QuizQuestion', // You need to create a model for the QuizQuestion association
+  through: 'quizQuestion', // You need to create a model for the QuizQuestion association
   as: 'quizzes',
 });
 

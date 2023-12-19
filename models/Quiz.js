@@ -9,18 +9,10 @@ Quiz.init(
     {
         id: {
             type: DataTypes.INTEGER,
-            allowNull: true,
+            allowNull: false,
             primaryKey: true,
             autoIncrement: true,
-        },
-        question_id: {
-            type: DataTypes.INTEGER,
-            references: {
-                model: 'question',
-                key: 'id',
-                unique: false
-            }
-        },
+        },     
         user_id: {
             type: DataTypes.INTEGER,
             references: {
@@ -28,7 +20,7 @@ Quiz.init(
                 key: 'id',
                 unique: false
             }
-        },
+        }
     },
     {
         sequelize,
