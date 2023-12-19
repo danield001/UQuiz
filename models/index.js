@@ -3,6 +3,7 @@ const User = require('./User');
 const Quiz = require('./Quiz');
 const Question = require('./Question');
 const Category = require('./Category');
+const QuizQuestion = require('./QuizQuestion');
 
 // Define associations
 User.hasMany(Quiz, {
@@ -15,12 +16,12 @@ Quiz.belongsTo(User, {
 });
 
 Quiz.belongsToMany(Question, {
-  through: 'QuizQuestion', // You need to create a model for the QuizQuestion association
+  through: 'quizQuestion', // You need to create a model for the QuizQuestion association
   as: 'questions',
 });
 
 Question.belongsToMany(Quiz, {
-  through: 'QuizQuestion', // You need to create a model for the QuizQuestion association
+  through: 'quizQuestion', // You need to create a model for the QuizQuestion association
   as: 'quizzes',
 });
 
@@ -43,4 +44,4 @@ Question.belongsTo(Category, {
 });
 
 
-module.exports = { User, Quiz, Question, Category};
+module.exports = { User, Quiz, Question, Category, QuizQuestion};
