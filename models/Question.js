@@ -17,6 +17,22 @@ Question.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
+        choice_a: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        choice_b: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        choice_c: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        choice_d: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
         answer: {
             type: DataTypes.STRING,
             allowNull: false,

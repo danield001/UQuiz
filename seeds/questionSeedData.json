@@ -1,22 +1,34 @@
 [
   {
-    "id": 1,
-    "question_body": "What two colours make green when painting?",
-    "answer": "yellow and blue",
-    "category_id": 2,
+
+    "question_body": "What is the name of the trilogy directed by Peter Jackson, based on J.R.R. Tolkien's novels, that was released between 2001 and 2003?",
+    "answer": "The Lord of the Rings",
+    "choice_a":"Harry Potter",
+    "choice_b":"Star Wars",
+    "choice_c":"The Lord of the Rings",
+    "choice_d":"The Hunger Games",
+    "category_id": 1,
     "created_by_user_id": 3
    },
   {
-    "id": 2,
-    "question_body": "Who is the current Prime Minister of Australia?",
+
+    "question_body": "Who is Prime Minister of Australia in 2023?",
     "answer": "Anthony Albanese",
+    "choice_a":"John Howard",
+    "choice_b":"Julia Gillard",
+    "choice_c":"Anthony Albanese",
+    "choice_d":"Malcolm Turnbull",
     "category_id": 1,
     "created_by_user_id": 2
   },
   {
-    "id": 3,
+
     "question_body": "What is the name of a cyclone that hit QLD in 2023?",
     "answer": "Cyclone Jasper",
+    "choice_a":"Cyclone Jasper",
+    "choice_b":"Cyclone Tracey",
+    "choice_c":"Cyclone Barbara",
+    "choice_d":"Cyclone Paul",
     "category_id": 1,
     "created_by_user_id": 2
   }

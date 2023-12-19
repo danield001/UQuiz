@@ -1,18 +1,14 @@
 [
     {
-        "id": 1,
-        "category_name": "Current Affairs"
+        "category_name": "Movies"
     },
     {
-        "id": 2,
-        "category_name": "The Arts"
-    },
-    {
-        "id": 3,
         "category_name": "Sports"
     },
     {
-        "id": 4,
         "category_name": "Entertainment"
+    },
+    {
+        "category_name": "Music"
     }
 ]
