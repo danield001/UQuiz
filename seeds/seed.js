@@ -6,6 +6,7 @@ const questionSeedData = require('./questionSeedData.json');
 const userSeedData = require('./userSeedData');
 const quizSeedData = require('./quizSeedData.json');
 
+
 const seedDatabase = async () => {
   try {
     await sequelize.sync({ force: true });
@@ -17,8 +18,7 @@ const seedDatabase = async () => {
     const questions = await Question.bulkCreate(questionSeedData);
     console.log('Questions seeded successfully.');
     const quiz = await Quiz.bulkCreate(quizSeedData);
-    console.log('Quizzes seeded successfully.');
-    
+    console.log('Quizzes seeded successfully.'); 
   
     // const users = await User.bulkCreate(userSeedData);
     console.log('Database seeded successfully.');

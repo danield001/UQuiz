@@ -3,6 +3,7 @@ const User = require('./User');
 const Quiz = require('./Quiz');
 const Question = require('./Question');
 const Category = require('./Category');
+const QuizQuestion = require('./QuizQuestion');
 
 // Define associations
 User.hasMany(Quiz, {
@@ -43,4 +44,4 @@ Question.belongsTo(Category, {
 });
 
 
-module.exports = { User, Quiz, Question, Category};
+module.exports = { User, Quiz, Question, Category, QuizQuestion};
