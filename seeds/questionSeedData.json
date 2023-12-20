@@ -31,6 +31,186 @@
     "choice_d":"Cyclone Paul",
     "category_id": 1,
     "created_by_user_id": 2
-  }
+  },
+  {
+    "question_body": "Keanu Reeves played the role of Neo in a highly influential sci-fi film released in 1999. What is the title of this movie?",
+    "answer": "The Matrix",
+    "choice_a":"Planet of the Apes",
+    "choice_b":"The Matrix",
+    "choice_c":"Cypher",
+    "choice_d":"Cyborg Soldier",
+    "category_id": 1,
+    "created_by_user_id": 1 
+  },
+  {
+    "question_body": "Christopher Nolan directed a 2010 science fiction film known for its intricate plot involving dreams within dreams. What is the title of this film?",
+    "answer": "Inception",
+    "choice_a":"Shutter Island",
+    "choice_b":"Time Crimes",
+    "choice_c":"Inception",
+    "choice_d":"Mr. Nobody",
+    "category_id": 1,
+    "created_by_user_id": 2 
+  },
+  {
+    "question_body": "Released in 1994, this animated film became a classic and is often considered one of the greatest animated movies of all time. What is the title of this Disney film?",
+    "answer": "The Lion King",
+    "choice_a":"Over the Hedge",
+    "choice_b":"Toy Story",
+    "choice_c":"Finding Nemo",
+    "choice_d":"The Lion King",
+    "category_id": 1,
+    "created_by_user_id": 2 
+  },
+  {
+    "question_body": "Who composed the famous symphony 'Symphony No. 9 in D minor, Op. 125,' commonly known as the 'Choral Symphony'?",
+    "answer": "Ludwig van Beethoven",
+    "choice_a": "Wolfgang Amadeus Mozart",
+    "choice_b": "Ludwig van Beethoven",
+    "choice_c": "Johann Sebastian Bach",
+    "choice_d": "Pyotr Ilyich Tchaikovsky",
+    "category_id": 4,
+    "created_by_user_id": 2
+},
+{
+    "question_body": "Which country music legend is known as the 'Man in Black'?",
+    "answer": "Johnny Cash",
+    "choice_a": "Willie Nelson",
+    "choice_b": "Hank Williams",
+    "choice_c": "Johnny Cash",
+    "choice_d": "George Strait",
+    "category_id": 4,
+    "created_by_user_id": 3
+},
+{
+    "question_body": "Who is often referred to as the 'King of Pop'?",
+    "answer": "Michael Jackson",
+    "choice_a": "Elvis Presley",
+    "choice_b": "Michael Jackson",
+    "choice_c": "Prince",
+    "choice_d": "Madonna",
+    "category_id": 4,
+    "created_by_user_id": 3
+},
+{
+    "question_body": "Which pop singer is known for hits like 'Hello' and 'Rolling in the Deep'?",
+    "answer": "Adele",
+    "choice_a": "Beyoncé",
+    "choice_b": "Taylor Swift",
+    "choice_c": "Adele",
+    "choice_d": "Ed Sheeran",
+    "category_id": 4,
+    "created_by_user_id": 4
+},
+{
+    "question_body": "What classical composer is famous for his 'Four Seasons' concertos?",
+    "answer": "Antonio Vivaldi",
+    "choice_a": "Johannes Brahms",
+    "choice_b": "Antonio Vivaldi",
+    "choice_c": "Ludwig van Beethoven",
+    "choice_d": "Franz Schubert",
+    "category_id": 4,
+    "created_by_user_id": 4
+},
+{
+    "question_body": "What is the capital city of Japan?",
+    "answer": "Tokyo",
+    "choice_a": "Seoul",
+    "choice_b": "Beijing",
+    "choice_c": "Bangkok",
+    "choice_d": "Tokyo",
+    "category_id": 8,
+    "created_by_user_id": 3
+},
+{
+    "question_body": "Which river is the longest in the world?",
+    "answer": "Nile",
+    "choice_a": "Amazon",
+    "choice_b": "Yangtze",
+    "choice_c": "Mississippi",
+    "choice_d": "Nile",
+    "category_id": 8,
+    "created_by_user_id": 3
+},
+{
+    "question_body": "In which continent is the Sahara Desert located?",
+    "answer": "Africa",
+    "choice_a": "South America",
+    "choice_b": "Australia",
+    "choice_c": "Africa",
+    "choice_d": "Europe",
+    "category_id": 8,
+    "created_by_user_id": 2
+},
+{
+    "question_body": "What is the highest mountain in the world?",
+    "answer": "Mount Everest",
+    "choice_a": "K2",
+    "choice_b": "Mount Kilimanjaro",
+    "choice_c": "Mount McKinley",
+    "choice_d": "Mount Everest",
+    "category_id": 8,
+    "created_by_user_id": 3
+},
+{
+    "question_body": "Which country is known as the Land of the Rising Sun?",
+    "answer": "Japan",
+    "choice_a": "China",
+    "choice_b": "Vietnam",
+    "choice_c": "Japan",
+    "choice_d": "South Korea",
+    "category_id": 8,
+    "created_by_user_id": 2
+},
+{
+  "question_body": "Who was the first President of the United States?",
+  "answer": "George Washington",
+  "choice_a": "Thomas Jefferson",
+  "choice_b": "John Adams",
+  "choice_c": "Alexander Hamilton",
+  "choice_d": "George Washington",
+  "category_id": 7,
+  "created_by_user_id": 1
+},
+{
+  "question_body": "In which year did World War II end?",
+  "answer": "1945",
+  "choice_a": "1939",
+  "choice_b": "1941",
+  "choice_c": "1945",
+  "choice_d": "1950",
+  "category_id": 7,
+  "created_by_user_id": 1
+},
+{
+  "question_body": "Who was the Egyptian queen known for her relationship with Julius Caesar and Mark Antony?",
+  "answer": "Cleopatra",
+  "choice_a": "Nefertiti",
+  "choice_b": "Hatshepsut",
+  "choice_c": "Cleopatra",
+  "choice_d": "Isis",
+  "category_id": 7,
+  "created_by_user_id": 2
+},
+{
+  "question_body": "What event marked the beginning of the French Revolution?",
+  "answer": "Storming of the Bastille",
+  "choice_a": "Execution of Louis XVI",
+  "choice_b": "Reign of Terror",
+  "choice_c": "Storming of the Bastille",
+  "choice_d": "Tennis Court Oath",
+  "category_id": 7,
+  "created_by_user_id": 1
+},
+{
+  "question_body": "Who was the leader of the Soviet Union during the Cuban Missile Crisis?",
+  "answer": "Nikita Khrushchev",
+  "choice_a": "Joseph Stalin",
+  "choice_b": "Leon Trotsky",
+  "choice_c": "Mikhail Gorbachev",
+  "choice_d": "Nikita Khrushchev",
+  "category_id": 7,
+  "created_by_user_id": 1
+}
 ]
 
