@@ -2,8 +2,8 @@ const loginFormHandler = async (event) => {
     event.preventDefault();
 
     //Collect values form the login form
-    const email = document.querySelector('#email-login').ariaValueMax.trim();
-    const password = document.querySelector('#password-login').ariaValueMax.trim();
+    const email = document.querySelector('#email-login').value.trim();
+    const password = document.querySelector('#password-login').value.trim();
 
 if (email && password) {
     //Send post request to the API endpoint
