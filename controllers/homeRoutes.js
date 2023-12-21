@@ -1,10 +1,12 @@
 const router = require('express').Router();
-const { Question, QuestionTag } = require('../models/index.js');
 
-//router.get('/', withAuth, async (req, res) => {
-  //  try {
-    //    c
-    //}
-//})
+const withAuth = require('../utils/auth');
+const { Question, QuestionTag } = require('../models/index');
+
+router.get("/example", (req, res)=>{
+  res.render("example")
+})
+
 
 module.exports = router;
+
