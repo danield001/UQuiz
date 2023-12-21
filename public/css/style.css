@@ -2,4 +2,14 @@
 
 body {
  background-color: #bcf5eb;
+ margin: 30px;
+}
+
+/* this is the colour palette for the page; follow the parameters by their names */
+:root {
+    --main: #D40000;
+    --secondary_1: #E12C2C;
+    --secondary_2: #FFA500;
+    --secondary_3: #FFD700;
+    --main_background: #FFDF00;  
 }
