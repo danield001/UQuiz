@@ -1,18 +1,26 @@
 [
     {
-        "id": 1,
+        "category_name": "Movies"
+    },
+    {
+        "category_name": "Sport"
+    },
+    {
+        "category_name": "Entertainment"
+    },
+    {
+        "category_name": "Music"
+    },
+    {
         "category_name": "Current Affairs"
     },
     {
-        "id": 2,
-        "category_name": "The Arts"
+        "category_name": "Politics"
     },
     {
-        "id": 3,
-        "category_name": "Sports"
+        "category_name": "History"
     },
     {
-        "id": 4,
-        "category_name": "Entertainment"
+        "category_name": "Geography"
     }
 ]

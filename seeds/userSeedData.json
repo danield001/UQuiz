@@ -15,5 +15,11 @@
         "username": "OliveB",
         "email_address": "oliveBranch@hotmail.com",
         "password": "peaceMan11"
+    },
+    {
+        "id": 4,
+        "username": "Libby55",
+        "email_address": "libster@gmail.com",
+        "password": "lobsterface!"
     }
 ]
