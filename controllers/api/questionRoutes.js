@@ -20,10 +20,10 @@ router.get('/', withAuth, async (req, res) => {
     }
 });
 
-router.get('/:category_name', withAuth, async (req, res) => {
+router.get('/:category_id', async (req, res) => {
     try {
         const questionDisp = await Question.findAll({
-            include: [{ Model: Category }, { Model: Question }],
+            where: { category_id:  req.params.category_id }
         });
         if (!questionDisp) {
             res.status(400);
@@ -32,6 +32,7 @@ router.get('/:category_name', withAuth, async (req, res) => {
             res.status(200).json(questionDisp);
         }
     } catch (err) {
+        console.log(err);
         res.status(500).json(err);
     }
 });
