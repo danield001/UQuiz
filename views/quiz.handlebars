@@ -1,11 +1,5 @@
 <!-- quiz.handlebars -->
-{{#each quizzes}}
-  <div class="quiz">
-    <h2>{{title}}</h2>
-    <ul>
-      {{#each questions}}
-        <li>{{question_body}}</li>
-      {{/each}}
-    </ul>
-  </div>
+{{#each quizzes as |quiz|}}
+    {{> quiz-details}}
 {{/each}}
+
