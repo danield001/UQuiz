@@ -11,66 +11,68 @@
     </table>
   </div>
 </div> 
+<!--heading here and form tag added with reference to whole form for js-->
+    <h3>Submit a question and answer</h3>
 
- <div id = "submitQuestion">
-   <h3>Submit a question and answer</h3>
-   <div class="field has-addons">
-     <div class="field-label is-normal">
-       <label class="label">Select the Question Category</label>
-     </div>
-     <div class="control is-expanded">
-       <div class="select is-fullwidth">
-         <select name="questionCategory">
-          <option value="CurrentAffairs">Current Affairs</option>
-          <option value="TheArts">The Arts</option> <!-- from categorySeedData? -->
-          <option value="Sports">Sports</option>
-          <option value="Entertainment">Entertainment</option>
-          <option value="Movies">Movies</option>
-          <option value="Politics">Politics</option>
-          <option value="Music">Music</option>
-          <option value="History">History</option>
-          <option value="Geography">Geography</option>
-         </select>
-       </div>
+    <form class="new-question-form">
+      <div class="field has-addons">
+        <div class="field-label is-normal">
+          <label class="label">Select the Question Category</label>
+        </div>
+        <div class="control is-expanded">
+          <div class="select is-fullwidth">
+            <select id="category-input" name="questionCategory">
+              <option value="CurrentAffairs">Current Affairs</option>
+              <option value="Sports">Sports</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Movies">Movies</option>
+              <option value="Politics">Politics</option>
+              <option value="Music">Music</option>
+              <option value="History">History</option>
+              <option value="Geography">Geography</option>
+            </select>
+          </div>
+          </div>
       </div>
-   </div>
-   <div class="control">
-    <!-- Choose button necessary? -->
-     <button type="submit" class="button is-primary">Choose</button>
-   </div>
 
-   <div class="field">
-    <div class="control">
-     <input class="input is-normal" type="text" placeholder="Enter the Question">
-     <input class="input is-normal" type="text" placeholder="Enter the Answer">
-     <input class="input is-normal" type="text" placeholder="Enter Choice A">
-     <input class="input is-normal" type="text" placeholder="Enter Choice B">
-     <input class="input is-normal" type="text" placeholder="Enter Choice C">
-     <input class="input is-normal" type="text" placeholder="Enter Choice D">
-    </div>
-   </div>
-   <div class="file">
-     <label class="file-label">
-      <input class="file-input" type="file" name="quizImage">
-       <span class="file-cta">
-         <span class="file-icon">
-          <i class="fas fa-upload"></i>
-         </span>
-         <span class="file-label">
-          Choose a file…
-         </span>
-       </span>
-     </label>
-   </div>
-    <div class="field is-grouped">
-     <p class="control">
-       <a class="button is-primary">Submit</a>
-     </p>
-    </div>
-  </div>
+      <div class="field">
+        <div class="control">
+        <input id= "question-input" class="input is-normal" type="text" placeholder="Enter the Question">
+        <input id="answer-input" class="input is-normal" type="text" placeholder="Enter the Answer">
+        <input id="choice-a-input" class="input is-normal" type="text" placeholder="Enter Choice A">
+        <input id="choice-b-input" class="input is-normal" type="text" placeholder="Enter Choice B">
+        <input id="choice-c-input" class="input is-normal" type="text" placeholder="Enter Choice C">
+        <input id="choice-d-input" class="input is-normal" type="text" placeholder="Enter Choice D">
+        </div>
+      </div>
+
+    <!-- Commented out - js will start simple and then extend into collecting image upload
+      <div class="file">
+        <label class="file-label">
+          <input class="file-input" type="file" name="quizImage">
+          <span class="file-cta">
+            <span class="file-icon">
+              <i class="fas fa-upload"></i>
+            </span>
+            <span class="file-label">
+              Choose a file…
+            </span>
+          </span>
+        </label>
+      </div> 
+      -->
+
+    <!--submit button for whole form-->
+        <div class="field is-grouped">
+        <p class="control">
+          <a class="button is-primary">Submit</a>
+        </p>
+        </div>
+      </div>
+    </form>
 
 <div id = "playUQuiz">
     <button id = "playuquiz" type="button">Play UQuiz</button>
 </div>
 
-<!-- need this? --><script src="./js/profile.js"></script>
+<script src="./js/questionSubmit.js"></script>
