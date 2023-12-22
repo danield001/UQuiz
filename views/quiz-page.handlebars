@@ -1,26 +1,29 @@
 <section class="card">
-    <a href="/question/{{id}}">
-    <header>QUIZ NUMBER {{quiz_id}}</header>
-    
-    <div class= "card-body box">
-        <h2 class="title is-1">{{question.question_body}}</h2>
+
+    <header>QUIZ NUMBER {{quizPage.id}}</header>
+
         <section>
-                <h3 class="subtitle is-3">
-                    A {{question.choice_a}}
+            <div class= "card-body box">
+                <h2 class="title is-1">{{quizPage.questions.[0].question_body}}</h2>
+
+               <h3 class="subtitle is-3">
+                    A {{quizPage.questions.[0].choice_a}}
                 </h3>
 
                 <h3 class="subtitle is-3"> 
-                    B {{question.choice_b}}
+                    B {{quizPage.questions.[0].choice_b}}
                 </h3>
 
                 <h3 class="subtitle is-3">
-                    C {{question.choice_c}}
+                    C {{quizPage.questions.[0].choice_c}}
                 </h3>
                 <h3 class="subtitle is-3">
-                    D {{question.choice_d}}
+                    D {{quizPage.questions.[0].choice_d}}
                 </h3>
             </div>
-
+        </section>
+        <section>
+            <label>Select your answer:</label>
             <div class="subtitle is-3">
                 <label class="radio">
                     <input type="radio" name="choice">
@@ -43,6 +46,8 @@
                 </label>
 
             </div>
+
+        <section>
             <div class="field is-grouped is-grouped-centered">
                 <p class="control">
                     <a class="button is-primary">
@@ -51,10 +56,15 @@
                 </p>
                 <p class="control">
                     <a class="button is-primary">
+                        Next question
+                    </a>
+                </p>
+                <p class="control">
+                    <a class="button is-primary">
                         Exit and return to quiz page
                     </a>
                 </p>
             </div>
-        </form>
+        </section>
     </div></a>
 </section>

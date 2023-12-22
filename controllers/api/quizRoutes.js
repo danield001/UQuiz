@@ -57,10 +57,10 @@ router.get("/:id", async (req, res) => {
             ],
         });
 
-        const quiz = dbQuizData.get({ plain: true });
+        const quizPage = dbQuizData.get({ plain: true });
         console.log(dbQuizData, "dbQuizData");
-        console.log(quiz, "quiz");
-        res.render("quiz-page", { quiz });
+        console.log(quizPage, "quizPage");
+        res.render("quiz-page", { quizPage });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error', details: error.message });
