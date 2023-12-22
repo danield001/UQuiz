@@ -35,6 +35,36 @@ router.get('/', async (req, res) => {
     }
 });
 
+//GET request at this route: http://localhost:3001/api/quizzes/:id
 
+router.get("/:id", async (req, res) => {
+    try {
+        const dbQuizData = await Quiz.findByPk(req.params.id, {
+            include: [
+                {
+                    model: Question,
+                    as: "questions",
+                    attributes: [
+                        "id",
+                        "question_body",
+                        "choice_a",
+                        "choice_b",
+                        "choice_c",
+                        "choice_d",
+                        "answer",
+                    ],
+                },
+            ],
+        });
+
+        const quiz = dbQuizData.get({ plain: true });
+        console.log(dbQuizData, "dbQuizData");
+        console.log(quiz, "quiz");
+        res.render("quiz-page", { quiz });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error', details: error.message });
+    }
+});
 
 module.exports = router;

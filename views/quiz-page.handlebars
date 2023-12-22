@@ -1,0 +1,60 @@
+<section class="card">
+    <a href="/question/{{id}}">
+    <header>QUIZ NUMBER {{quiz_id}}</header>
+    
+    <div class= "card-body box">
+        <h2 class="title is-1">{{question.question_body}}</h2>
+        <section>
+                <h3 class="subtitle is-3">
+                    A {{question.choice_a}}
+                </h3>
+
+                <h3 class="subtitle is-3"> 
+                    B {{question.choice_b}}
+                </h3>
+
+                <h3 class="subtitle is-3">
+                    C {{question.choice_c}}
+                </h3>
+                <h3 class="subtitle is-3">
+                    D {{question.choice_d}}
+                </h3>
+            </div>
+
+            <div class="subtitle is-3">
+                <label class="radio">
+                    <input type="radio" name="choice">
+                    A
+                </label>
+
+                <label class="radio">
+                    <input type="radio" name="answer">
+                    B
+                </label>
+
+                <label class="radio">
+                    <input type="radio" name="answer">
+                    C
+                </label>
+
+                <label class="radio">
+                    <input type="radio" name="answer">
+                    D
+                </label>
+
+            </div>
+            <div class="field is-grouped is-grouped-centered">
+                <p class="control">
+                    <a class="button is-primary">
+                        Submit
+                    </a>
+                </p>
+                <p class="control">
+                    <a class="button is-primary">
+                        Exit and return to quiz page
+                    </a>
+                </p>
+            </div>
+        </form>
+    </div></a>
+</section>
