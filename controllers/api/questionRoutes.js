@@ -4,22 +4,32 @@ const { Question, Category } = require('../../models/index')
 const router = require('express').Router();
 
 
+//GET request that will dynamically render options for the category and user select menu 
 router.get('/', withAuth, async (req, res) => {
     try {
-        const questionDisp = await Question.findAll({
-            include: [{ Model: Question }],
-            });
-        if (!questionDisp) {
-            res.status(404);
-            res.json({ message: 'Question not found' });
-        } else {
-            res.status(200).json(questionDisp);
-        }
+        const dbQuestionData = await Question.findAll({
+            include: [
+                {
+                    model: Category,
+                    attributes: [
+                        'id',
+                        'category_name',
+                    ],
+                },
+            ],
+        });
+        const questionDetail = dbQuestionData.map((questionDetail) =>
+        Question.get({plain: true })
+        );
+        res.render("quiz", {
+            questionDetail
+        });
     } catch (err) {
         res.status(500).json(err);
     }
 });
 
+//GET request at this route http://localhost:3001/api/questions for getting a quiz with the same category
 router.get('/:category_id', async (req, res) => {
     try {
         const questionDisp = await Question.findAll({

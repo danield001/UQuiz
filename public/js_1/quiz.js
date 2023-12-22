@@ -30,7 +30,21 @@ const nextQuestion = async (event) => {
     }
 };
 
+const submitChoice = async (event) => {
+    event.preventDefault();
+//compare answer with the selected choice
+//Make visible the answer
+//disappear the submit button
+//Make next question button appear/active
+//post username_id to db for that question so it doesn't appear again.
 
+    try {
+        const response = await fetch('/')
 
+    }
+
+}
+
+document.querySelector('#submit-choice').addEventListener('click', submitChoice);
 document.querySelector('#start-quiz').addEventListener('click', startQuiz);
 document.querySelector('#next-question').addEventListener('click', nextQuestion);

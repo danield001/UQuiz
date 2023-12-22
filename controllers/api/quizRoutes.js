@@ -52,6 +52,7 @@ router.get("/:id", async (req, res) => {
                         "choice_c",
                         "choice_d",
                         "answer",
+                        "created_by_user_id",
                     ],
                 },
             ],

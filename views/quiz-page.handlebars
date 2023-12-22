@@ -1,6 +1,10 @@
 <section class="card">
 
-    <header>QUIZ NUMBER {{quizPage.id}}</header>
+    <header>
+        <h1>QUIZ NUMBER {{quizPage.id}}</h1>
+        <li>QUESTION NUMBER: {{quizPage.questions.[0].id}}</li>
+        <li>CREATOR ID: {{quizPage.questions.[0].created_by_user_id}}</li>
+    </header>
 
         <section>
             <div class= "card-body box">
@@ -44,9 +48,11 @@
                     <input type="radio" name="answer">
                     D
                 </label>
-
             </div>
-
+            <div>The correct answer was: ___ 
+                {{quizPage.questions.[0].answer}}
+            </div>
+        </section>
         <section>
             <div class="field is-grouped is-grouped-centered">
                 <p class="control">
@@ -55,16 +61,19 @@
                     </a>
                 </p>
                 <p class="control">
-                    <a class="button is-primary">
+                    <a class="button is-primary" id="next-question">
                         Next question
                     </a>
                 </p>
                 <p class="control">
-                    <a class="button is-primary">
+                    <a class="button is-primary" href="/quiz">
                         Exit and return to quiz page
                     </a>
                 </p>
             </div>
         </section>
-    </div></a>
+    </div>
 </section>
+
+<script src="../public/js_1/quiz.js"></script>
+
