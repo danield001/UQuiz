@@ -45,6 +45,7 @@ router.get('/', async (req, res) => {
 //get route for quizData to send to js file to dynamically render
 router.get(`/data/:id`, async (req, res) => {
     try {
+
         const quizData = await Quiz.findByPk(req.params.id, {
             include: [
                 {
@@ -64,8 +65,9 @@ router.get(`/data/:id`, async (req, res) => {
                 },
             ],
         });
-        console.log("quizData");
-        res.status(200).json(quizData)
+
+        res.status(200).json(quizData) 
+        
     } catch (err) {
         res.status(500).json(err);
     }});

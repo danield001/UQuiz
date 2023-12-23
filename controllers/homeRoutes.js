@@ -21,7 +21,7 @@ router.get("/homepage", (req, res)=>{
 
 //GET request at this route: http://localhost:3001/quiz/:id
 //get request to render the page
-router.get("/:id", async (req, res) => {
+router.get("/quiz/:id", async (req, res) => {
   try {
       const dbQuizData = await Quiz.findByPk(req.params.id, {
           include: [

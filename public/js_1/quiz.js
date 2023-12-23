@@ -29,7 +29,9 @@ const nextQuestion = async (event) => {
 };
 
 //handler to dynamically render the pulled database information on the page. 
-const pullQuizData = async(event) => {
+const questionEl = document.getElementById('questions');
+
+const getQuizData = async(event) => {
     event.preventDefault();
 
     console.log('I can hear you');
@@ -43,17 +45,44 @@ const pullQuizData = async(event) => {
         }
 
         const quizData = await response.json();
-        console.log(quizData, "quizData");
 
+        const questions = quizData.questions;
+        console.log(questions);
+        return questions;
 
     } catch (error) {
         console.error('Error fetching question:', error);
     }
 };
 
+const renderQuestion = (questions) => {
+    const cardEl = document.createElement('div');
+    const cardLabelEl = document.createElement('label');
+    const cardInputEl = document.createElement('input');
+    const cardSpanEl = document.createElement('span');
+
+    cardEl.classList('card-body', 'box');
+    cardLabelEl.classList.add('radio');
+    cardInputEl.setAttribute('type', 'radio');
+    cardInputEl.setAttribute('name', 'answer');
+    cardSpanEl.setAttribute('id', 'choice-a');
+    cardSpanEl.innerHTML = questions.id;
+    cardSpanEl.innerText = question;
+
+    cardEl.appendChild(cardLabelEl);
+    cardEl.appendChild(cardInputEl);
+    cardEl.appendChild(cardSpanEl);
+    questionEl.appendChild(cardEl);
+};
+
+const buttonHandler = () =>
+        getQuizData().then((response) => response.forEach((question) => renderQuestion(question)));
+
+// document.querySelector('#submit-choice').addEventListener('click', submitChoice);
+document.querySelector('#start-quiz').addEventListener('click', getQuizData);
+
 //Handler for the submitChoice answer on quiz-page
 
 
-// document.querySelector('#submit-choice').addEventListener('click', submitChoice);
-document.querySelector('#start-quiz').addEventListener('click', pullQuizData);
+
 // document.querySelector('#next-question').addEventListener('click', nextQuestion);
