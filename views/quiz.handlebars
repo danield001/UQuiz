@@ -2,7 +2,8 @@
     <h1 class = "title is-1">Choose your quiz</h1>
     <!-- quiz.handlebars -->
     {{#each quizzes as |quiz|}}
-        {{> quiz-details}}
+    {{log quiz "response from route"}}
+    <h2>Quiz number: {{quiz.id}}</h2>
     {{/each}}
 </div>
 

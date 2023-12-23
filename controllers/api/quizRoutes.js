@@ -21,10 +21,13 @@ router.get('/', async (req, res) => {
                 },
             ],
         });
-
-        const quizzes = dbQuizData.map((quiz) =>
+        
+        const quizzes = await dbQuizData.map((quiz) =>
+        {
+        console.log(quizzes);
         quiz.get({ plain: true })
-        );
+        });
+        console.log(quizzes);
         res.render("quiz", {
             quizzes
         });
@@ -59,12 +62,16 @@ router.get("/:id", async (req, res) => {
         });
 
         const quizPage = dbQuizData.get({ plain: true });
-        console.log(dbQuizData, "dbQuizData");
-        console.log(quizPage, "quizPage");
-        res.render("quiz-page", { quizPage });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error', details: error.message });
+
+        console.log("Rendering quiz page:", quizPage);
+        
+        res.render("quiz-page", { 
+            ...quizPage 
+        });       
+        
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ err: 'Internal Server Error', details: err.message });
     }
 });
 

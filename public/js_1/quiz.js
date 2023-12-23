@@ -1,8 +1,6 @@
 const startQuiz = async (event) => {
     event.preventDefault();
 
-    let id = 1;
-
     try {
         const response = await fetch(`/api/question/${id}`);
         const question = await response.json();
@@ -30,6 +28,7 @@ const nextQuestion = async (event) => {
     }
 };
 
+//Handler for the submitChoice answer on quiz-page
 const submitChoice = async (event) => {
     event.preventDefault();
 //compare answer with the selected choice
@@ -38,12 +37,8 @@ const submitChoice = async (event) => {
 //Make next question button appear/active
 //post username_id to db for that question so it doesn't appear again.
 
-    try {
-        const response = await fetch('/')
 
-    }
-
-}
+};
 
 document.querySelector('#submit-choice').addEventListener('click', submitChoice);
 document.querySelector('#start-quiz').addEventListener('click', startQuiz);

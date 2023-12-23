@@ -1,78 +1,58 @@
-<section class="card">
 
+
+<main>
+    <section>
+        <div class="block" id="quiz-home">
+            <h1>Welcome to Quiz number {{id}}!</h1>
+            <h2>Click START to begin.</h2>
+            <button class="button" id="start-button">START QUIZ</button>
+        </div>
+    </section>
+
+    <section class="block" id="quiz-question">
+    {{#each questions}}
     <header>
-        <h1>QUIZ NUMBER {{quizPage.id}}</h1>
-        <li>QUESTION NUMBER: {{quizPage.questions.[0].id}}</li>
-        <li>CREATOR ID: {{quizPage.questions.[0].created_by_user_id}}</li>
+        <li>QUESTION NUMBER: {{id}}</li>
+        <li>CREATOR ID: {{created_by_user_id}}</li>
     </header>
-
-        <section>
-            <div class= "card-body box">
-                <h2 class="title is-1">{{quizPage.questions.[0].question_body}}</h2>
-
-               <h3 class="subtitle is-3">
-                    A {{quizPage.questions.[0].choice_a}}
-                </h3>
-
-                <h3 class="subtitle is-3"> 
-                    B {{quizPage.questions.[0].choice_b}}
-                </h3>
-
-                <h3 class="subtitle is-3">
-                    C {{quizPage.questions.[0].choice_c}}
-                </h3>
-                <h3 class="subtitle is-3">
-                    D {{quizPage.questions.[0].choice_d}}
-                </h3>
-            </div>
-        </section>
         <section>
             <label>Select your answer:</label>
             <div class="subtitle is-3">
                 <label class="radio">
                     <input type="radio" name="choice">
-                    A
+                   A <span>{{choice_a}}</span>
                 </label>
-
+                <br>
                 <label class="radio">
                     <input type="radio" name="answer">
-                    B
+                    B <span>{{choice_b}}</span>
                 </label>
-
+                <br>
                 <label class="radio">
                     <input type="radio" name="answer">
-                    C
+                    C <span>{{choice_c}}</span>
                 </label>
-
+                <br>
                 <label class="radio">
                     <input type="radio" name="answer">
-                    D
+                    D <span>{{choice_d}}</span>
                 </label>
             </div>
-            <div>The correct answer was: ___ 
-                {{quizPage.questions.[0].answer}}
-            </div>
-        </section>
-        <section>
-            <div class="field is-grouped is-grouped-centered">
-                <p class="control">
-                    <a class="button is-primary">
-                        Submit
-                    </a>
-                </p>
-                <p class="control">
-                    <a class="button is-primary" id="next-question">
-                        Next question
-                    </a>
-                </p>
-                <p class="control">
-                    <a class="button is-primary" href="/quiz">
-                        Exit and return to quiz page
-                    </a>
-                </p>
+            <div>The correct answer is: <span>{{answer}}</span> 
             </div>
         </section>
+        {{/each}}
+
+        <section class="block">
+            <div class="container" id="game-over">
+                <h1>You're finished!</h1>
+                <p>Your score for Quiz # {{id}} is <span id="final-score"></span></p>.
+            </div>
+        </section>
+</main>
+
     </div>
+ 
 </section>
 
 <script src="../public/js_1/quiz.js"></script>
