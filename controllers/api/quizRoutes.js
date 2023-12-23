@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Question, Quiz } = require('../../models');
+const { Question, Quiz, QuizQuestion } = require('../../models');
 
 //GET request at this route: http://localhost:3001/api/quizzes
 router.get('/', async (req, res) => {
@@ -17,6 +17,8 @@ router.get('/', async (req, res) => {
                         'choice_b',
                         'choice_c',
                         'choice_d',
+                        'answer',
+                        'created_by_user_id'
                     ],
                 },
             ],
@@ -38,14 +40,16 @@ router.get('/', async (req, res) => {
     }
 });
 
-//GET request at this route: http://localhost:3001/api/quizzes/:id
 
-router.get("/:id", async (req, res) => {
+
+//get route for quizData to send to js file to dynamically render
+router.get(`/data/:id`, async (req, res) => {
     try {
-        const dbQuizData = await Quiz.findByPk(req.params.id, {
+        const quizData = await Quiz.findByPk(req.params.id, {
             include: [
                 {
-                    model: Question,
+                    model: Question, 
+                    through: QuizQuestion,
                     as: "questions",
                     attributes: [
                         "id",
@@ -60,19 +64,10 @@ router.get("/:id", async (req, res) => {
                 },
             ],
         });
-
-        const quizPage = dbQuizData.get({ plain: true });
-
-        console.log("Rendering quiz page:", quizPage);
-        
-        res.render("quiz-page", { 
-            ...quizPage 
-        });       
-        
+        console.log("quizData");
+        res.status(200).json(quizData)
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ err: 'Internal Server Error', details: err.message });
-    }
-});
+        res.status(500).json(err);
+    }});
 
 module.exports = router;

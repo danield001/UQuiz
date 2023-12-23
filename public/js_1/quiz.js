@@ -28,18 +28,32 @@ const nextQuestion = async (event) => {
     }
 };
 
-//Handler for the submitChoice answer on quiz-page
-const submitChoice = async (event) => {
+//handler to dynamically render the pulled database information on the page. 
+const pullQuizData = async(event) => {
     event.preventDefault();
-//compare answer with the selected choice
-//Make visible the answer
-//disappear the submit button
-//Make next question button appear/active
-//post username_id to db for that question so it doesn't appear again.
+
+    console.log('I can hear you');
+
+    try {
+        const response = await fetch(`/api/quiz/data/1`);
+        console.log(response);
+
+        if(!response.ok) {
+            throw newError(`HTTP error. Status: ${response.status}`);
+        }
+
+        const quizData = await response.json();
+        console.log(quizData, "quizData");
 
 
+    } catch (error) {
+        console.error('Error fetching question:', error);
+    }
 };
 
-document.querySelector('#submit-choice').addEventListener('click', submitChoice);
-document.querySelector('#start-quiz').addEventListener('click', startQuiz);
-document.querySelector('#next-question').addEventListener('click', nextQuestion);
+//Handler for the submitChoice answer on quiz-page
+
+
+// document.querySelector('#submit-choice').addEventListener('click', submitChoice);
+document.querySelector('#start-quiz').addEventListener('click', pullQuizData);
+// document.querySelector('#next-question').addEventListener('click', nextQuestion);
