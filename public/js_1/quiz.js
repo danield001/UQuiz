@@ -119,6 +119,8 @@ const submitButtonHandler = (event) => {
 
     event.preventDefault();
 
+    const guess = event.target.checked
+
 
 
 }
