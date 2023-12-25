@@ -1,43 +1,34 @@
-const startQuiz = async (event) => {
-    event.preventDefault();
+//Set variables to access sections
+const quizHome = document.getElementById("quiz-home");
+const quizQuestionSet = document.getElementById("quiz-question-set");
+const gameOverScreen = document.getElementById("game-over-screen");
 
-    try {
-        const response = await fetch(`/api/question/${id}`);
-        const question = await response.json();
+//set variables to access buttons including choices buttons
+const startButton = document.getElementById("start-button");
+const choices = document.querySelector("#choice-list");
 
-        console.log(question);
-    } catch (error) {
-        console.error('Error Initialising Quiz');
-    }
-};
+//set original attributes of sections
+gameOverScreen.setAttribute("style", "visibility: hidden;");
+quizQuestionSet.setAttribute("style", "visibility: hidden;");
+quizHome.setAttribute("style", "display: flex");
 
-const nextQuestion = async (event) => {
-    event.preventDefault();
-
-    let id = 1; // Initialize id
-
-    try {
-        const response = await fetch(`/api/question/${id}`); // Assuming your endpoint is '/api/question/:id'
-        const question = await response.json();
-
-        console.log(question); // Do something with the question, e.g., display it on the UI
-
-        id++; // Increment id for the next question
-    } catch (error) {
-        console.error('Error fetching question:', error);
-    }
-};
+//Identify positions for question data in quizQuestionSet section
+const choiceA = document.getElementById("choice-a");
+const choiceB = document.getElementById("choice-b");
+const choiceC = document.getElementById("choice-c");
+const choiceD = document.getElementById("choice-d");
+const questionBody = document.getElementById("question-body");
+const questionCreator = document.getElementById("question-creator");
+const answerTextEl = document.getElementById("check-answer");
 
 //handler to dynamically render the pulled database information on the page. 
-const questionEl = document.getElementById('questions');
-
 const getQuizData = async(event) => {
     event.preventDefault();
 
     console.log('I can hear you');
 
     try {
-        const response = await fetch(`/api/quiz/data/1`);
+        const response = await fetch(`/api/quiz/data/${id}`);
         console.log(response);
 
         if(!response.ok) {
@@ -45,7 +36,7 @@ const getQuizData = async(event) => {
         }
 
         const quizData = await response.json();
-
+        console.log(quizData);
         const questions = quizData.questions;
         console.log(questions);
         return questions;
@@ -55,31 +46,54 @@ const getQuizData = async(event) => {
     }
 };
 
+//current question array to link when rendering text
+let currentQuestionIndex = 0;
+
+//event listener to activate function on startBtn WORKS!
+startButton.addEventListener("click", function (event) {
+    event.preventDefault();
+    startButton.disabled = true;
+    quizHome.style.display = "none";
+    quizQuestionSet.style.visibility = "visible";
+    
+    renderQuestion();
+  });
+
+//render questions dynamically 
 const renderQuestion = (questions) => {
     const cardEl = document.createElement('div');
     const cardLabelEl = document.createElement('label');
     const cardInputEl = document.createElement('input');
     const cardSpanEl = document.createElement('span');
 
-    cardEl.classList('card-body', 'box');
-    cardLabelEl.classList.add('radio');
+    cardEl.setAttribute('style', 'card-body');
+    cardEl.setAttribute('style', 'box');
+    cardLabelEl.setAttribute('style', 'radio');
     cardInputEl.setAttribute('type', 'radio');
     cardInputEl.setAttribute('name', 'answer');
     cardSpanEl.setAttribute('id', 'choice-a');
-    cardSpanEl.innerHTML = questions.id;
-    cardSpanEl.innerText = question;
+    // cardSpanEl.innerHTML = questions.id;
+    // cardSpanEl.innerText = question;
 
     cardEl.appendChild(cardLabelEl);
     cardEl.appendChild(cardInputEl);
     cardEl.appendChild(cardSpanEl);
-    questionEl.appendChild(cardEl);
+    quizQuestionSet.appendChild(cardEl);
+
+    var currentQuestion = questions[currentQuestionIndex];
+    questionBody.textContent = currentQuestion.question_body;
+    choiceA.textContent = currentQuestion.choice_a;
+    choiceB.textContent = currentQuestion.choice_b;
+    choiceC.textContent = currentQuestion.choice_c;
+    choiceD.textContent = currentQuestion.choice_d;
+
 };
 
-const buttonHandler = () =>
-        getQuizData().then((response) => response.forEach((question) => renderQuestion(question)));
+const buttonHandler = (questions) =>
+        getQuizData().then((response) => response.forEach((questions) => renderQuestion(questions)));
 
 // document.querySelector('#submit-choice').addEventListener('click', submitChoice);
-document.querySelector('#start-quiz').addEventListener('click', getQuizData);
+document.querySelector('#start-button').addEventListener('click', getQuizData);
 
 //Handler for the submitChoice answer on quiz-page
 
