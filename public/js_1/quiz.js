@@ -5,7 +5,7 @@ const gameOverScreen = document.getElementById("game-over-screen");
 
 //set variables to access buttons including choices buttons
 const startButton = document.getElementById("start-button");
-const choices = document.querySelector("#choice-list");
+const nextButton = document.getElementById("next-button");
 
 //set original attributes of sections
 gameOverScreen.setAttribute("style", "visibility: hidden;");
@@ -21,64 +21,60 @@ const questionBody = document.getElementById("question-body");
 const questionCreator = document.getElementById("question-creator");
 const answerTextEl = document.getElementById("check-answer");
 
+let questions = [];
 //handler to dynamically render the pulled database information on the page. 
 const getQuizData = async(event) => {
-    event.preventDefault();
+    if(event) {
+        event.preventDefault();
+    }
 
     console.log('I can hear you');
 
     try {
-        const response = await fetch(`/api/quiz/data/${id}`);
-        console.log(response);
+        const response = await fetch(`/api/quiz/data/1`);
 
         if(!response.ok) {
-            throw newError(`HTTP error. Status: ${response.status}`);
+            throw new Error(`HTTP error. Status: ${response.status}`);
         }
 
         const quizData = await response.json();
-        console.log(quizData);
-        const questions = quizData.questions;
-        console.log(questions);
-        return questions;
+        questions = quizData.questions;        
 
     } catch (error) {
         console.error('Error fetching question:', error);
     }
 };
 
+
+
 //current question array to link when rendering text
 let currentQuestionIndex = 0;
 
-//event listener to activate function on startBtn WORKS!
-startButton.addEventListener("click", function (event) {
+const startButtonHandler = async (event) => {
     event.preventDefault();
+
     startButton.disabled = true;
     quizHome.style.display = "none";
     quizQuestionSet.style.visibility = "visible";
+
+    try {
+        await getQuizData();
+        if(!questions) {
+            console.log("no questions", questions);
+        } else {
+            console.log(questions);
+        }
+        
+        questions.forEach(renderQuestion);
+
+    } catch(error) {
+        console.error('Error fetching question:', error);
+    }
+};
     
-    renderQuestion();
-  });
 
 //render questions dynamically 
-const renderQuestion = (questions) => {
-    const cardEl = document.createElement('div');
-    const cardLabelEl = document.createElement('label');
-    const cardInputEl = document.createElement('input');
-    const cardSpanEl = document.createElement('span');
-
-    cardEl.setAttribute('style', 'card-body');
-    cardEl.setAttribute('style', 'box');
-    cardLabelEl.setAttribute('style', 'radio');
-    cardInputEl.setAttribute('type', 'radio');
-    cardInputEl.setAttribute('name', 'answer');
-    cardSpanEl.setAttribute('id', 'choice-a');
-    // cardSpanEl.innerHTML = questions.id;
-    // cardSpanEl.innerText = question;
-
-    cardEl.appendChild(cardLabelEl);
-    cardEl.appendChild(cardInputEl);
-    cardEl.appendChild(cardSpanEl);
-    quizQuestionSet.appendChild(cardEl);
+const renderQuestion = () => {
 
     var currentQuestion = questions[currentQuestionIndex];
     questionBody.textContent = currentQuestion.question_body;
@@ -89,14 +85,25 @@ const renderQuestion = (questions) => {
 
 };
 
-const buttonHandler = (questions) =>
-        getQuizData().then((response) => response.forEach((questions) => renderQuestion(questions)));
+const nextButtonHandler = (event) => {
+    event.preventDefault();
+
+    currentQuestionIndex ++;
+
+    if(currentQuestionIndex < questions.length) {
+        renderQuestion();
+    } else {
+        currentQuestionIndex = 0;
+        nextButton.disabled = true;
+        quizHome.style.display = "none";
+        quizQuestionSet.style.display = "none";
+        gameOverScreen.style.visibility = "visible";
+    }
+}
+
 
 // document.querySelector('#submit-choice').addEventListener('click', submitChoice);
-document.querySelector('#start-button').addEventListener('click', getQuizData);
+document.querySelector('#start-button').addEventListener('click', startButtonHandler);
 
 //Handler for the submitChoice answer on quiz-page
-
-
-
-// document.querySelector('#next-question').addEventListener('click', nextQuestion);
+document.querySelector('#next-button').addEventListener('click', nextButtonHandler);
