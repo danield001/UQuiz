@@ -20,8 +20,7 @@ const choiceC = document.getElementById("choice-c");
 const choiceD = document.getElementById("choice-d");
 const questionBody = document.getElementById("question-body");
 const questionCreator = document.getElementById("question-creator");
-
-const correctAnswerEl = document.getElementById("answer");
+const checkAnswerEl = document.getElementById("check-answer");
 
 const radioValA = document.getElementById("radio-value-a");
 const radioValB = document.getElementById("radio-value-b");
@@ -130,25 +129,28 @@ const submitButtonHandler = (event) => {
         score++;
         console.log(score);
 
-        answerTextEl.textContent = "CORRECT!";
+        const responseEl = $('<h2>');
+        responseEl.text = ("CORRECT!");
+        console.log(responseEl, "responseEl");
+        checkAnswerEl.append(responseEl);
+        console.log(checkAnswerEl, "checkAnswerEl");
 
         setTimeout(clearMessage, 500);
         const clearMessage = () => answerTextEl.textContent = " ";
     } else {
         
-        const checkAnswerEl = document.getElementById("check-answer");
-
         const answerTextEl = $('<span id="answer">');
         const responseTextEl = $('<h3>');
         const responseEl = $('<h2>');
     
-        answerTextEl.text = $(``)
+        answerTextEl.text = $("questions[currentQuestionIndex].answer");
         responseTextEl.text = $("The correct answer is: ");
         responseEl.text = $("WRONG!");
 
+        responseTextEl.append(answerTextEl);
+        responseEl.append(responseTextEl);
+        checkAnswerEl.append(responseEl);
 
-    
-        correctAnswerEl.textContent = questions[currentQuestionIndex].answer;
         setTimeout(clearMessage, 500);
         clearMessage = () => answerTextEl.textContent = " ";
 
