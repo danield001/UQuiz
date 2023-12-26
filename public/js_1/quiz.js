@@ -9,8 +9,8 @@ const nextButton = document.getElementById("next-button");
 const submitButton = document.getElementById("submit-button");
 
 //set original attributes of sections
-gameOverScreen.setAttribute("style", "visibility: hidden;");
-quizQuestionSet.setAttribute("style", "visibility: hidden;");
+gameOverScreen.setAttribute("style", "visibility: hidden");
+quizQuestionSet.setAttribute("style", "visibility: hidden");
 quizHome.setAttribute("style", "display: flex");
 
 //Identify positions for question data in quizQuestionSet section
@@ -20,7 +20,8 @@ const choiceC = document.getElementById("choice-c");
 const choiceD = document.getElementById("choice-d");
 const questionBody = document.getElementById("question-body");
 const questionCreator = document.getElementById("question-creator");
-const answerTextEl = document.getElementById("check-answer");
+
+const correctAnswerEl = document.getElementById("answer");
 
 const radioValA = document.getElementById("radio-value-a");
 const radioValB = document.getElementById("radio-value-b");
@@ -58,6 +59,8 @@ let currentQuestionIndex = 0;
 
 const startButtonHandler = async (event) => {
     event.preventDefault();
+
+    console.log('start button clicked');
 
     startButton.disabled = true;
     quizHome.style.display = "none";
@@ -118,11 +121,55 @@ let score = 0;
 const submitButtonHandler = (event) => {
 
     event.preventDefault();
+    
+    const guessEl = $('input:checked');
+    const guess = guessEl.val();
+    console.log(guess, "guess");
 
-    const guess = event.target.checked
+    if(guess === questions[currentQuestionIndex].answer) {
+        score++;
+        console.log(score);
+
+        answerTextEl.textContent = "CORRECT!";
+
+        setTimeout(clearMessage, 500);
+        const clearMessage = () => answerTextEl.textContent = " ";
+    } else {
+        
+        const checkAnswerEl = document.getElementById("check-answer");
+
+        const answerTextEl = $('<span id="answer">');
+        const responseTextEl = $('<h3>');
+        const responseEl = $('<h2>');
+    
+        answerTextEl.text = $(``)
+        responseTextEl.text = $("The correct answer is: ");
+        responseEl.text = $("WRONG!");
 
 
+    
+        correctAnswerEl.textContent = questions[currentQuestionIndex].answer;
+        setTimeout(clearMessage, 500);
+        clearMessage = () => answerTextEl.textContent = " ";
 
+    }
+
+    //Add less than length so to trigger action at end of questions
+    currentQuestionIndex++;
+    if (currentQuestionIndex < questionBody.length) {
+
+    renderQuestion();
+    } else {
+    gameOver();
+    };
+}
+
+const gameOver= () => {
+    quizQuestionSet.style.display = "none";
+    gameOverScreen.style.visibility = "visible";
+
+    let finalScore = document.getElementById("final-score");
+    finalScore.textContent = score;
 }
 
 // document.querySelector('#submit-choice').addEventListener('click', submitChoice);
