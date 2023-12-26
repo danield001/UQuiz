@@ -8,6 +8,7 @@ const exphbs = require('express-handlebars');
 const app = express();
 const PORT = process.env.PORT || 3001;
 const hbs = exphbs.create({ });
+
 const sess = {
   secret: 'Super secret secret',
   cookie: {},
@@ -17,6 +18,8 @@ const sess = {
     db: sequelize
   })
 };
+
+
 
 app.use(session(sess));
 
