@@ -13,6 +13,9 @@ gameOverScreen.setAttribute("style", "visibility: hidden");
 quizQuestionSet.setAttribute("style", "visibility: hidden");
 quizHome.setAttribute("style", "display: flex");
 
+//Identify root element for rendering messages
+const messageEl = document.getElementById("message-element");
+
 //Identify positions for question data in quizQuestionSet section
 const choiceA = document.getElementById("choice-a");
 const choiceB = document.getElementById("choice-b");
@@ -20,7 +23,6 @@ const choiceC = document.getElementById("choice-c");
 const choiceD = document.getElementById("choice-d");
 const questionBody = document.getElementById("question-body");
 const questionCreator = document.getElementById("question-creator");
-const checkAnswerEl = document.getElementById("check-answer");
 
 const radioValA = document.getElementById("radio-value-a");
 const radioValB = document.getElementById("radio-value-b");
@@ -33,8 +35,6 @@ const getQuizData = async(event) => {
     if(event) {
         event.preventDefault();
     }
-
-    console.log('I can hear you');
 
     try {
         const response = await fetch(`/api/quiz/data/1`);
@@ -51,19 +51,16 @@ const getQuizData = async(event) => {
     }
 };
 
-
-
 //current question array to link when rendering text
 let currentQuestionIndex = 0;
 
 const startButtonHandler = async (event) => {
     event.preventDefault();
 
-    console.log('start button clicked');
-
     startButton.disabled = true;
     quizHome.style.display = "none";
     quizQuestionSet.style.visibility = "visible";
+    nextButton.style.visibility = "hidden";
 
     try {
         await getQuizData();
@@ -99,6 +96,14 @@ const renderQuestion = () => {
 
 const nextButtonHandler = (event) => {
     event.preventDefault();
+    submitButton.style.visibility = 'visible';
+    nextButton.style.visibility = 'hidden';
+
+    while (messageEl.firstChild) {
+        messageEl.removeChild(messageEl.firstChild);
+    }
+
+    $('input[type="radio"]').prop('checked', false);
 
     currentQuestionIndex ++;
 
@@ -120,53 +125,58 @@ let score = 0;
 const submitButtonHandler = (event) => {
 
     event.preventDefault();
+    console.log(messageEl);
+    submitButton.style.visibility = 'hidden';
+    nextButton.style.visibility = 'visible';
     
     const guessEl = $('input:checked');
     const guess = guessEl.val();
-    console.log(guess, "guess");
+
+    if(!$('input:checked')) {
+        //Render message
+        console.log('no input checked');
+        const responseEl = $('<h2>');     
+        responseEl.text("Please select a response to continue.");
+        messageEl.append(responseEl);
+    }
 
     if(guess === questions[currentQuestionIndex].answer) {
         score++;
         console.log(score);
-
-        const responseEl = $('<h2>');
-        responseEl.text = ("CORRECT!");
-        console.log(responseEl, "responseEl");
-        checkAnswerEl.append(responseEl);
-        console.log(checkAnswerEl, "checkAnswerEl");
-
-        setTimeout(clearMessage, 500);
-        const clearMessage = () => answerTextEl.textContent = " ";
-    } else {
         
-        const answerTextEl = $('<span id="answer">');
-        const responseTextEl = $('<h3>');
-        const responseEl = $('<h2>');
-    
-        answerTextEl.text = $("questions[currentQuestionIndex].answer");
-        responseTextEl.text = $("The correct answer is: ");
-        responseEl.text = $("WRONG!");
+        //Render message
+        const responseEl = document.createElement("h2");     
+        responseEl.textContent="CORRECT!";
+        messageEl.append(responseEl);
 
-        responseTextEl.append(answerTextEl);
-        responseEl.append(responseTextEl);
-        checkAnswerEl.append(responseEl);
+        const myResponse = setTimeout(clearMessage, 5000); 
+        let clearMessage = () => {
+            messageEl.children().remove();
+        };
 
-        setTimeout(clearMessage, 500);
-        clearMessage = () => answerTextEl.textContent = " ";
+    } else {
+        submitButton.style.visibility = 'hidden';
+        nextButton.style.visibility = 'visible';
+
+        const answerTextEl = document.createElement("span");
+        answerTextEl.setAttribute("id", "answer");
+        answerTextEl.textContent = `The correct answer is: ${questions[currentQuestionIndex].answer}`;
+
+        const responseEl = document.createElement("h2");
+        responseEl.textContent = "WRONG!";
+
+        responseEl.append(answerTextEl);
+        messageEl.append(responseEl);
+
+        const myResponse = setTimeout(clearMessage, 5000); 
+        let clearMessage = () => {
+            messageEl.children().remove();
+        };
 
     }
-
-    //Add less than length so to trigger action at end of questions
-    currentQuestionIndex++;
-    if (currentQuestionIndex < questionBody.length) {
-
-    renderQuestion();
-    } else {
-    gameOver();
-    };
 }
 
-const gameOver= () => {
+const gameOver = () => {
     quizQuestionSet.style.display = "none";
     gameOverScreen.style.visibility = "visible";
 
