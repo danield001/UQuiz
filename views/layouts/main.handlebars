@@ -9,17 +9,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
 
-
-
 <body>
     <header>
       <!--commented out for now because it was interuptting loading routes-->
     {{!-- <img src="/public/UQuiz Logo.png" width="112" height="28"> --}}
     <nav class="navbar" role="navigation" aria-label="main navigation">
         
-
     <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-      <!--items in here (below) also?-->
+     
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
@@ -27,8 +24,8 @@
          </div>
         <div id="navbarBasicExample" class="navbar-menu">
          <div class="navbar-start">
-          <a class="navbar-item">Home</a>
-          <a class="navbar-item">Play UQuiz</a>
+          <a href = "/homepage" class="navbar-item">Home</a>
+          <a href = "/quiz" class="navbar-item">Play UQuiz</a>
           <a class="navbar-item">Choose Quiz</a>
           <a class="navbar-item">Submit Questions</a>
         <div class="navbar-end">
