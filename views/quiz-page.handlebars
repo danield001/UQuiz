@@ -1,17 +1,17 @@
 
-
-<main>
+<main style="background-color:#FFDF00; height: 100vh">
     <section>
-        <div class="block" id="quiz-home">
-            <h1>Welcome to Quiz number {{id}}!</h1>
+        <div id="quiz-home">
+            <h1 style="font-weight: 500; font-size: 350%; padding-bottom: 10px">Welcome to Quiz number {{id}}!</h1>
+
             <h2>Click START to begin.</h2>
-            
-            <button class="button" id="start-button">START QUIZ</button>
+            <button class="button" id="start-button" style="background-color: #D40000; color: #FFDF00">START QUIZ</button>
+
         </div>
     </section>
 
     <section>
-        <div class="block" id="quiz-question-set">
+        <div id="quiz-question-set">
             <h1 id="question-body"></h1>
             <h2 id="question-creator"></h2>
             <div>
@@ -36,8 +36,8 @@
                         <input type="radio" name="choice" id="radio-value-d" defaultChecked="false">
                         <span id="choice-d"></span>
                     </label>
-                    <button class="button" value="Submit" id="submit-button">SUBMIT ANSWER</button>
-                    <button class="button" id="next-button">NEXT</button>
+                    <button class="button" value="Submit" id="submit-button" style="background-color: #D40000; color: #FFDF00">SUBMIT ANSWER</button>
+                    <button class="button" id="next-button" style="background-color: #D40000; color: #FFDF00">NEXT</button>
                 </div>
             </div>
             <div class="block" id="message-element"></div>
@@ -47,7 +47,7 @@
     
 
     <section>
-        <div class="block" id="game-over-screen">
+        <div id="game-over-screen">
             <h1>You're finished!</h1>
             <p>Your score for Quiz # {{id}} is <span id="final-score"></span></p>.
         </div>
