@@ -121,6 +121,8 @@ const nextButtonHandler = (event) => {
         quizHome.style.display = "none";
         quizQuestionSet.style.display = "none";
         gameOverScreen.style.visibility = "visible";
+
+        gameOver();
     }
 }
 
@@ -187,6 +189,7 @@ const gameOver = () => {
     gameOverScreen.style.visibility = "visible";
 
     let finalScore = document.getElementById("final-score");
+    console.log(finalScore);
     finalScore.textContent = score;
 }
 

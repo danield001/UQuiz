@@ -4,14 +4,11 @@
         <h1 class="is-full has-text-centered" style="font-weight: 500; font-size: 350%;">Quiz number {{id}}</h1>
 
         <section>
-            <div class="card" id="quiz-home">
-                <div class="card-content">
-                    <h2>Click START to begin.</h2>
-                </div>
-                <div class="card-footer">
-                    <button class="is-invisible card-footer-item is-large is-responsive">Placeholder</button>
-                    <button class="is-invisible card-footer-item is-large is-responsive">Placeholder</button>
-                    <button class="button card-footer-item is-large is-responsive" id="start-button" style="background-color: #D40000; color: #FFDF00">START QUIZ</button>
+            <div class="card pb-6 pt-6" id="quiz-home">
+                <div class="columns card-content is-justify-content-center">
+   
+                    <button class="button  is-large is-responsive" id="start-button" style="background-color: #D40000; color: #FFDF00">START QUIZ</button>
+
                 </div>
             </div>
         </section>
@@ -58,12 +55,17 @@
         </section>
 
         <section>
-            <div class="card" id="game-over-screen">            
-                <div class="card-content">
-                <h1>You're finished!</h1>
+            <div class="card pb-6 pt-6" id="game-over-screen">            
+                <div class="columns card-content is-justify-content-center">
+                <h1>You're finished! </h1>
+                <br>
                 <p>Your score for Quiz # {{id}} is <span id="final-score"></span>.</p>
                 </div>
+                <div class="card-footer is-justify-content-center">
+                <button class="button  is-large is-responsive" id="" style="background-color: #D40000; color: #FFDF00">RETURN TO QUIZZES</button>
+                </div>
             </div>
+
         </section>
     </div>
 </main>
