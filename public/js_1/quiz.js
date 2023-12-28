@@ -11,7 +11,7 @@ const submitButton = document.getElementById("submit-button");
 //set original attributes of sections
 gameOverScreen.setAttribute("style", "visibility: hidden");
 quizQuestionSet.setAttribute("style", "visibility: hidden");
-quizHome.setAttribute("style", "display: flex");
+quizHome.setAttribute("style", "display: block");
 
 //Identify root element for rendering messages
 const messageEl = document.getElementById("message-element");
