@@ -37,7 +37,13 @@ const getQuizData = async(event) => {
     }
 
     try {
-        const response = await fetch(`/api/quiz/data/1`);
+        // Get the current path from window.location.pathname
+        const path = window.location.pathname;
+
+        // Extract the id from the path (assuming the last segment is the id)
+        const id = path.split('/').pop();
+
+        const response = await fetch(`/api/quiz/data/${id}`);
 
         if(!response.ok) {
             throw new Error(`HTTP error. Status: ${response.status}`);
