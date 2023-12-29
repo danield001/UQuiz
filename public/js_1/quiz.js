@@ -19,6 +19,9 @@ scoreboardScreen.setAttribute("style", "visibility: hidden");
 //Identify root element for rendering messages
 const messageEl = document.getElementById("message-element");
 
+//Identify root element for rendering table rows for score data
+const scoreBoardEl = document.getElementById("score-board-element");
+
 //Identify positions for question data in quizQuestionSet section
 const choiceA = document.getElementById("choice-a");
 const choiceB = document.getElementById("choice-b");
@@ -160,10 +163,18 @@ const submitButtonHandler = (event) => {
         responseEl.textContent="CORRECT!";
         messageEl.append(responseEl);
 
-        const myResponse = setTimeout(clearMessage, 5000); 
         let clearMessage = () => {
-            messageEl.children().remove();
-        };
+            if (messageEl instanceof Element) {
+              // If messageEl is a regular DOM element
+              messageEl.innerHTML = '';
+            } else if (messageEl instanceof jQuery) {
+              // If messageEl is a jQuery object
+              messageEl.empty();
+            } else {
+              console.error('Unsupported messageEl type:', messageEl);
+            }
+          };
+        const myResponse = setTimeout(clearMessage, 5000); 
 
     } else {
         submitButton.style.visibility = 'hidden';
@@ -179,11 +190,19 @@ const submitButtonHandler = (event) => {
         responseEl.append(answerTextEl);
         messageEl.append(responseEl);
 
-        const myResponse = setTimeout(clearMessage, 5000); 
         let clearMessage = () => {
-            messageEl.children().remove();
-        };
+            if (messageEl instanceof Element) {
+              // If messageEl is a regular DOM element
+              messageEl.innerHTML = '';
+            } else if (messageEl instanceof jQuery) {
+              // If messageEl is a jQuery object
+              messageEl.empty();
+            } else {
+              console.error('Unsupported messageEl type:', messageEl);
+            }
+          };
 
+        const myResponse = setTimeout(clearMessage, 5000); 
     }
 }
 
@@ -196,13 +215,35 @@ const gameOver = () => {
     finalScore.textContent = score;
 }
 
+let highScores = [];
+let users = [];
+
 const saveScoreButtonHandler = async (event) => {
     event.preventDefault();
-    await saveScore();
+
+    try {
+        await saveScore();
+        await getQuizScoreData();
+
+        if(!scores) {
+            console.log("no scores", scores);
+        } else {
+            console.log(scores);
+        }
+
+        highScores = scoreData.score;  
+        users = scoreData.user_id.username;   
+
+        scores.forEach(renderScore);
+    
+    } catch(error) {
+    console.error('Error fetching quiz question:', error);
+    };
 
     gameOverScreen.style.display = "none";
     scoreboardScreen.style.visibility = "visible";
 }
+
 
 const saveScore = async () => {
     // Get the current path from window.location.pathname
@@ -233,10 +274,56 @@ const saveScore = async () => {
         console.error('Error saving score:', error);
         alert('An error occurred while saving the score.');
        }
+
     } else {
         alert('Quiz ID and score must be provided.');
     }
 }
+
+
+
+const getQuizScoreData = async() => {
+    
+        try {
+            // Get the current path from window.location.pathname
+            const path = window.location.pathname;
+    
+            // Extract the id from the path (assuming the last segment is the id)
+            const id = path.split('/').pop();
+            
+            const response = await fetch(`/api/score/quiz/${id}`);
+    
+            if(!response.ok) {
+                throw new Error(`HTTP error. Status: ${response.status}`);
+            }
+    
+            const scores = await response.json();
+
+    
+        } catch (error) {
+            console.error('Error fetching question:', error);
+        }
+};
+
+//render scores dynamically 
+const renderScore = () => {
+
+    const scoreRowEl = document.createElement("tr");
+    const usernameEl = document.createElement("td");
+    const highScoreEl = document.createElement("td");
+
+    usernameEl.textContent=`username, ${username}`;
+    highScoreEl.textContent=`highScore, ${highScore}`;
+
+    usernameEl.append(highScoreEl);
+    scoreRowEl.append(usernameEl);
+    scoreBoardEl.append(scoreRowEl);
+
+    var currentQuestion = questions[currentQuestionIndex];
+    questionBody.textContent = currentQuestion.question_body;
+    choiceA.textContent = currentQuestion.choice_a;
+};
+
 
 // document.querySelector('#submit-choice').addEventListener('click', submitChoice);
 document.querySelector('#start-button').addEventListener('click', startButtonHandler);

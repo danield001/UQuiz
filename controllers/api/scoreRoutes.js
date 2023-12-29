@@ -35,6 +35,7 @@ router.get('/quiz/:id', async (req, res) => {
       });
   
       res.status(200).json(scores); // Send the scores back as a JSON response
+      console.log(scores);
     } catch (err) {
       console.error('Error fetching scores:', err);
       res.status(500).json({ error: 'Internal Server Error' }); // Handle errors and send an appropriate response
