@@ -8,7 +8,6 @@ const scoreboardScreen = document.getElementById("scoreboard-screen");
 const startButton = document.getElementById("start-button");
 const nextButton = document.getElementById("next-button");
 const submitButton = document.getElementById("submit-button");
-const returnHomeButton = document.getElementById("return-home");
 
 //set original attributes of sections
 gameOverScreen.setAttribute("style", "visibility: hidden");
@@ -18,6 +17,9 @@ scoreboardScreen.setAttribute("style", "visibility: hidden");
 
 //Identify root element for rendering messages
 const messageEl = document.getElementById("message-element");
+
+//Identify root element for rendering table rows for score data
+const scoreBoardEl = document.getElementById("score-board-element");
 
 //Identify positions for question data in quizQuestionSet section
 const choiceA = document.getElementById("choice-a");
@@ -136,7 +138,6 @@ let score = 0;
 const submitButtonHandler = (event) => {
 
     event.preventDefault();
-    console.log(messageEl);
     submitButton.style.visibility = 'hidden';
     nextButton.style.visibility = 'visible';
     
@@ -160,10 +161,18 @@ const submitButtonHandler = (event) => {
         responseEl.textContent="CORRECT!";
         messageEl.append(responseEl);
 
-        const myResponse = setTimeout(clearMessage, 5000); 
         let clearMessage = () => {
-            messageEl.children().remove();
-        };
+            if (messageEl instanceof Element) {
+              // If messageEl is a regular DOM element
+              messageEl.innerHTML = '';
+            } else if (messageEl instanceof jQuery) {
+              // If messageEl is a jQuery object
+              messageEl.empty();
+            } else {
+              console.error('Unsupported messageEl type:', messageEl);
+            }
+          };
+        const myResponse = setTimeout(clearMessage, 5000); 
 
     } else {
         submitButton.style.visibility = 'hidden';
@@ -179,11 +188,19 @@ const submitButtonHandler = (event) => {
         responseEl.append(answerTextEl);
         messageEl.append(responseEl);
 
-        const myResponse = setTimeout(clearMessage, 5000); 
         let clearMessage = () => {
-            messageEl.children().remove();
-        };
+            if (messageEl instanceof Element) {
+              // If messageEl is a regular DOM element
+              messageEl.innerHTML = '';
+            } else if (messageEl instanceof jQuery) {
+              // If messageEl is a jQuery object
+              messageEl.empty();
+            } else {
+              console.error('Unsupported messageEl type:', messageEl);
+            }
+          };
 
+        const myResponse = setTimeout(clearMessage, 5000); 
     }
 }
 
@@ -192,50 +209,122 @@ const gameOver = () => {
     gameOverScreen.style.visibility = "visible";
 
     let finalScore = document.getElementById("final-score");
-    console.log(finalScore);
     finalScore.textContent = score;
 }
 
+let highScores = [];
+let usernames = [];
+
 const saveScoreButtonHandler = async (event) => {
-    event.preventDefault();
-    await saveScore();
+    
+    try {
+        event.preventDefault();
+
+        await saveScore();
+
+        await displayQuizScores();
+
+    } catch (error) {
+        console.error("Error handling save score:", error);
+    }
 
     gameOverScreen.style.display = "none";
     scoreboardScreen.style.visibility = "visible";
-}
+};
+
+const displayQuizScores = async () => {
+    try {
+        const scoreData = await getQuizScoreData();
+
+        if(!scoreData) {
+            console.log("No scores available.");
+            return;
+        }
+        
+        console.log(scoreData);
+        highScores = score;  
+        usernames = user.username;   
+
+        scoreData.forEach((scoreData) => renderScore(usernames, highScores))
+    } catch (error) {
+        console.error("Error fetching quiz scores:", error);
+    }
+};
 
 const saveScore = async () => {
     // Get the current path from window.location.pathname
     const path = window.location.pathname;
 
     // Extract the id from the path (assuming the last segment is the id)
-    const id = path.split('/').pop();
-    const quiz_id = id;
-    console.log(id)
+    let quiz_id = path.split('/').pop();
+    const user_id = 3;
 
-    if ( quiz_id && score) {
-        try {
-            const response = await fetch(`/api/score`, {
-            method: 'POST',
-            body: JSON.stringify({ quiz_id, score }),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            });
-        
-            if (response.ok) {
-            // document.location.replace('/quiz');
-            // alert('Score saved');
-            // } else {
-            alert('Failed to save score');
-            }
-       } catch(error) {
-        console.error('Error saving score:', error);
-        alert('An error occurred while saving the score.');
-       }
-    } else {
-        alert('Quiz ID and score must be provided.');
+    if ( quiz_id && user_id && score) {
+        const response = await fetch(`/api/score`, {
+        method: 'POST',
+        body: JSON.stringify({ quiz_id, user_id, score }),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        });
+    
+        if (response.ok) {
+        // document.location.replace('/quiz');
+        alert('Score saved');
+        } else {
+        alert('Failed to save score');
+        }
     }
+};
+
+const getQuizScoreData = async() => {
+    
+    try {
+        console.log("quiz score data function being used");
+        // Get the current path from window.location.pathname
+        const path = window.location.pathname;
+
+        // Extract the id from the path (assuming the last segment is the id)
+        const id = path.split('/').pop();
+        
+        const response = await fetch(`/api/score/quiz/${id}`);
+
+        if(!response.ok) {
+            throw new Error(`HTTP error. Status: ${response.status}`);
+        }
+
+        return await response.json();
+
+    } catch (error) {
+        console.error('Error fetching question:', error);
+        return null;
+    }
+};
+
+//render scores dynamically 
+const renderScore = (username, highScore) => {
+
+    const scoreRowEl = document.createElement("tr");
+    const usernameEl = document.createElement("td");
+    const highScoreEl = document.createElement("td");
+
+    usernameEl.textContent=`username, ${username}`;
+    highScoreEl.textContent=`highScore, ${highScore}`;
+
+    usernameEl.append(highScoreEl);
+    scoreRowEl.append(usernameEl);
+    scoreBoardEl.append(scoreRowEl);
+
+    var currentQuestion = questions[currentQuestionIndex];
+    questionBody.textContent = currentQuestion.question_body;
+    choiceA.textContent = currentQuestion.choice_a;
+};
+
+const returnHomeButtonHandler = (event) => {
+    event.preventDefault();
+
+    document.location.replace('/quiz');
+
 }
 
 // document.querySelector('#submit-choice').addEventListener('click', submitChoice);
@@ -249,3 +338,6 @@ document.querySelector('#submit-button').addEventListener('click', submitButtonH
 
 //Handler for the saveScore button on quiz-page
 document.querySelector('#save-score').addEventListener('click', saveScoreButtonHandler);
+
+//Handler for return Home button
+document.querySelector('#return-home').addEventListener('click', returnHomeButtonHandler);

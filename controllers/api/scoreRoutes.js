@@ -2,8 +2,8 @@ const router = require('express').Router();
 const { Score, Quiz, User } = require('../../models');
 const withAuth = require('../../utils/auth');
 
-// CREATE a score
-router.post('/', withAuth, async (req, res) => {
+// CREATE a score  (add withAuth when ready)
+router.post('/',  async (req, res) => {
     console.log('POST /api/score route reached');
     try {
       const newScore = await Score.create(req.body);
@@ -35,6 +35,7 @@ router.get('/quiz/:id', async (req, res) => {
       });
   
       res.status(200).json(scores); // Send the scores back as a JSON response
+      console.log(scores);
     } catch (err) {
       console.error('Error fetching scores:', err);
       res.status(500).json({ error: 'Internal Server Error' }); // Handle errors and send an appropriate response
