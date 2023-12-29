@@ -2,16 +2,19 @@
 const quizHome = document.getElementById("quiz-home");
 const quizQuestionSet = document.getElementById("quiz-question-set");
 const gameOverScreen = document.getElementById("game-over-screen");
+const scoreboardScreen = document.getElementById("scoreboard-screen");
 
 //set variables to access buttons including choices buttons
 const startButton = document.getElementById("start-button");
 const nextButton = document.getElementById("next-button");
 const submitButton = document.getElementById("submit-button");
+const returnHomeButton = document.getElementById("return-home");
 
 //set original attributes of sections
 gameOverScreen.setAttribute("style", "visibility: hidden");
 quizQuestionSet.setAttribute("style", "visibility: hidden");
 quizHome.setAttribute("style", "display: block");
+scoreboardScreen.setAttribute("style", "visibility: hidden");
 
 //Identify root element for rendering messages
 const messageEl = document.getElementById("message-element");
@@ -193,11 +196,12 @@ const gameOver = () => {
     finalScore.textContent = score;
 }
 
-const saveScoreButtonHandler = (event) => {
+const saveScoreButtonHandler = async (event) => {
     event.preventDefault();
+    await saveScore();
 
-    saveScore();
-
+    gameOverScreen.style.display = "none";
+    scoreboardScreen.style.visibility = "visible";
 }
 
 const saveScore = async () => {
@@ -220,9 +224,9 @@ const saveScore = async () => {
             });
         
             if (response.ok) {
-            document.location.replace('/quiz');
-            alert('Score saved');
-            } else {
+            // document.location.replace('/quiz');
+            // alert('Score saved');
+            // } else {
             alert('Failed to save score');
             }
        } catch(error) {
