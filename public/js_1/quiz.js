@@ -2,16 +2,22 @@
 const quizHome = document.getElementById("quiz-home");
 const quizQuestionSet = document.getElementById("quiz-question-set");
 const gameOverScreen = document.getElementById("game-over-screen");
+const scoreboardScreen = document.getElementById("scoreboard-screen");
 
 //set variables to access buttons including choices buttons
 const startButton = document.getElementById("start-button");
 const nextButton = document.getElementById("next-button");
 const submitButton = document.getElementById("submit-button");
+const returnHomeButton = document.getElementById("return-home");
 
 //set original attributes of sections
 gameOverScreen.setAttribute("style", "visibility: hidden");
 quizQuestionSet.setAttribute("style", "visibility: hidden");
-quizHome.setAttribute("style", "display: flex");
+quizHome.setAttribute("style", "display: block");
+scoreboardScreen.setAttribute("style", "visibility: hidden");
+
+//Identify root element for rendering messages
+const messageEl = document.getElementById("message-element");
 
 //Identify positions for question data in quizQuestionSet section
 const choiceA = document.getElementById("choice-a");
@@ -20,8 +26,6 @@ const choiceC = document.getElementById("choice-c");
 const choiceD = document.getElementById("choice-d");
 const questionBody = document.getElementById("question-body");
 const questionCreator = document.getElementById("question-creator");
-
-const correctAnswerEl = document.getElementById("answer");
 
 const radioValA = document.getElementById("radio-value-a");
 const radioValB = document.getElementById("radio-value-b");
@@ -35,10 +39,14 @@ const getQuizData = async(event) => {
         event.preventDefault();
     }
 
-    console.log('I can hear you');
-
     try {
-        const response = await fetch(`/api/quiz/data/1`);
+        // Get the current path from window.location.pathname
+        const path = window.location.pathname;
+
+        // Extract the id from the path (assuming the last segment is the id)
+        const id = path.split('/').pop();
+
+        const response = await fetch(`/api/quiz/data/${id}`);
 
         if(!response.ok) {
             throw new Error(`HTTP error. Status: ${response.status}`);
@@ -52,19 +60,16 @@ const getQuizData = async(event) => {
     }
 };
 
-
-
 //current question array to link when rendering text
 let currentQuestionIndex = 0;
 
 const startButtonHandler = async (event) => {
     event.preventDefault();
 
-    console.log('start button clicked');
-
     startButton.disabled = true;
     quizHome.style.display = "none";
     quizQuestionSet.style.visibility = "visible";
+    nextButton.style.visibility = "hidden";
 
     try {
         await getQuizData();
@@ -77,7 +82,7 @@ const startButtonHandler = async (event) => {
         questions.forEach(renderQuestion);
 
     } catch(error) {
-        console.error('Error fetching question:', error);
+        console.error('Error fetching quiz question:', error);
     }
 };
     
@@ -100,6 +105,14 @@ const renderQuestion = () => {
 
 const nextButtonHandler = (event) => {
     event.preventDefault();
+    submitButton.style.visibility = 'visible';
+    nextButton.style.visibility = 'hidden';
+
+    while (messageEl.firstChild) {
+        messageEl.removeChild(messageEl.firstChild);
+    }
+
+    $('input[type="radio"]').prop('checked', false);
 
     currentQuestionIndex ++;
 
@@ -111,6 +124,8 @@ const nextButtonHandler = (event) => {
         quizHome.style.display = "none";
         quizQuestionSet.style.display = "none";
         gameOverScreen.style.visibility = "visible";
+
+        gameOver();
     }
 }
 
@@ -121,55 +136,106 @@ let score = 0;
 const submitButtonHandler = (event) => {
 
     event.preventDefault();
+    console.log(messageEl);
+    submitButton.style.visibility = 'hidden';
+    nextButton.style.visibility = 'visible';
     
     const guessEl = $('input:checked');
     const guess = guessEl.val();
-    console.log(guess, "guess");
+
+    if(!$('input:checked')) {
+        //Render message
+        console.log('no input checked');
+        const responseEl = $('<h2>');     
+        responseEl.text("Please select a response to continue.");
+        messageEl.append(responseEl);
+    }
 
     if(guess === questions[currentQuestionIndex].answer) {
         score++;
         console.log(score);
-
-        answerTextEl.textContent = "CORRECT!";
-
-        setTimeout(clearMessage, 500);
-        const clearMessage = () => answerTextEl.textContent = " ";
-    } else {
         
-        const checkAnswerEl = document.getElementById("check-answer");
+        //Render message
+        const responseEl = document.createElement("h2");     
+        responseEl.textContent="CORRECT!";
+        messageEl.append(responseEl);
 
-        const answerTextEl = $('<span id="answer">');
-        const responseTextEl = $('<h3>');
-        const responseEl = $('<h2>');
-    
-        answerTextEl.text = $(``)
-        responseTextEl.text = $("The correct answer is: ");
-        responseEl.text = $("WRONG!");
+        const myResponse = setTimeout(clearMessage, 5000); 
+        let clearMessage = () => {
+            messageEl.children().remove();
+        };
 
+    } else {
+        submitButton.style.visibility = 'hidden';
+        nextButton.style.visibility = 'visible';
 
-    
-        correctAnswerEl.textContent = questions[currentQuestionIndex].answer;
-        setTimeout(clearMessage, 500);
-        clearMessage = () => answerTextEl.textContent = " ";
+        const answerTextEl = document.createElement("span");
+        answerTextEl.setAttribute("id", "answer");
+        answerTextEl.textContent = `The correct answer is: ${questions[currentQuestionIndex].answer}`;
+
+        const responseEl = document.createElement("h2");
+        responseEl.textContent = "WRONG!";
+
+        responseEl.append(answerTextEl);
+        messageEl.append(responseEl);
+
+        const myResponse = setTimeout(clearMessage, 5000); 
+        let clearMessage = () => {
+            messageEl.children().remove();
+        };
 
     }
-
-    //Add less than length so to trigger action at end of questions
-    currentQuestionIndex++;
-    if (currentQuestionIndex < questionBody.length) {
-
-    renderQuestion();
-    } else {
-    gameOver();
-    };
 }
 
-const gameOver= () => {
+const gameOver = () => {
     quizQuestionSet.style.display = "none";
     gameOverScreen.style.visibility = "visible";
 
     let finalScore = document.getElementById("final-score");
+    console.log(finalScore);
     finalScore.textContent = score;
+}
+
+const saveScoreButtonHandler = async (event) => {
+    event.preventDefault();
+    await saveScore();
+
+    gameOverScreen.style.display = "none";
+    scoreboardScreen.style.visibility = "visible";
+}
+
+const saveScore = async () => {
+    // Get the current path from window.location.pathname
+    const path = window.location.pathname;
+
+    // Extract the id from the path (assuming the last segment is the id)
+    const id = path.split('/').pop();
+    const quiz_id = id;
+    console.log(id)
+
+    if ( quiz_id && score) {
+        try {
+            const response = await fetch(`/api/score`, {
+            method: 'POST',
+            body: JSON.stringify({ quiz_id, score }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            });
+        
+            if (response.ok) {
+            // document.location.replace('/quiz');
+            // alert('Score saved');
+            // } else {
+            alert('Failed to save score');
+            }
+       } catch(error) {
+        console.error('Error saving score:', error);
+        alert('An error occurred while saving the score.');
+       }
+    } else {
+        alert('Quiz ID and score must be provided.');
+    }
 }
 
 // document.querySelector('#submit-choice').addEventListener('click', submitChoice);
@@ -180,3 +246,6 @@ document.querySelector('#next-button').addEventListener('click', nextButtonHandl
 
 //Handler for the submitChoice answer on quiz-page
 document.querySelector('#submit-button').addEventListener('click', submitButtonHandler);
+
+//Handler for the saveScore button on quiz-page
+document.querySelector('#save-score').addEventListener('click', saveScoreButtonHandler);

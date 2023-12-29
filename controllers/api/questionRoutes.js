@@ -5,7 +5,7 @@ const router = require('express').Router();
 
 
 //GET request that will dynamically render options for the category and user select menu 
-router.get('/', withAuth, async (req, res) => {
+router.get('/',  withAuth, async (req, res) => {
     try {
         const dbQuestionData = await Question.findAll({
             include: [
