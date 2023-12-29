@@ -1,11 +1,12 @@
 const sequelize = require('../config/connection');
-const { Category, Question, Quiz, User, QuizQuestion } = require('../models');
+const { Category, Question, Quiz, User, QuizQuestion, Score } = require('../models');
 
 const categorySeedData = require('./categorySeedData');
 const questionSeedData = require('./questionSeedData');
 const userSeedData = require('./userSeedData');
 const quizSeedData = require('./quizSeedData');
 const quizQuestionSeedData = require('./quizQuestionSeedData');
+const scoreSeedData = require('./scoreSeedData');
 
 
 const seedDatabase = async () => {
@@ -22,6 +23,8 @@ const seedDatabase = async () => {
     console.log('Quizzes seeded successfully.'); 
     const quizquestions = await QuizQuestion.bulkCreate(quizQuestionSeedData);
     console.log('QuizQuestions seeded successfully.');
+    const scores = await Score.bulkCreate(scoreSeedData);
+    console.log('Scores seeded successfully.');
   
     // const users = await User.bulkCreate(userSeedData);
     console.log('Database seeded successfully.');

@@ -79,7 +79,7 @@ const startButtonHandler = async (event) => {
         questions.forEach(renderQuestion);
 
     } catch(error) {
-        console.error('Error fetching question:', error);
+        console.error('Error fetching quiz question:', error);
     }
 };
     
@@ -193,6 +193,47 @@ const gameOver = () => {
     finalScore.textContent = score;
 }
 
+const saveScoreButtonHandler = (event) => {
+    event.preventDefault();
+
+    saveScore();
+
+}
+
+const saveScore = async () => {
+    // Get the current path from window.location.pathname
+    const path = window.location.pathname;
+
+    // Extract the id from the path (assuming the last segment is the id)
+    const id = path.split('/').pop();
+    const quiz_id = id;
+    console.log(id)
+
+    if ( quiz_id && score) {
+        try {
+            const response = await fetch(`/api/score`, {
+            method: 'POST',
+            body: JSON.stringify({ quiz_id, score }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            });
+        
+            if (response.ok) {
+            document.location.replace('/quiz');
+            alert('Score saved');
+            } else {
+            alert('Failed to save score');
+            }
+       } catch(error) {
+        console.error('Error saving score:', error);
+        alert('An error occurred while saving the score.');
+       }
+    } else {
+        alert('Quiz ID and score must be provided.');
+    }
+}
+
 // document.querySelector('#submit-choice').addEventListener('click', submitChoice);
 document.querySelector('#start-button').addEventListener('click', startButtonHandler);
 
@@ -201,3 +242,6 @@ document.querySelector('#next-button').addEventListener('click', nextButtonHandl
 
 //Handler for the submitChoice answer on quiz-page
 document.querySelector('#submit-button').addEventListener('click', submitButtonHandler);
+
+//Handler for the saveScore button on quiz-page
+document.querySelector('#save-score').addEventListener('click', saveScoreButtonHandler);
