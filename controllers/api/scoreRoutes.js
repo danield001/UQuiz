@@ -2,8 +2,8 @@ const router = require('express').Router();
 const { Score, Quiz, User } = require('../../models');
 const withAuth = require('../../utils/auth');
 
-// CREATE a score
-router.post('/', withAuth, async (req, res) => {
+// CREATE a score  (add withAuth when ready)
+router.post('/',  async (req, res) => {
     console.log('POST /api/score route reached');
     try {
       const newScore = await Score.create(req.body);

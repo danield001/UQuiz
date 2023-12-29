@@ -8,7 +8,6 @@ const scoreboardScreen = document.getElementById("scoreboard-screen");
 const startButton = document.getElementById("start-button");
 const nextButton = document.getElementById("next-button");
 const submitButton = document.getElementById("submit-button");
-const returnHomeButton = document.getElementById("return-home");
 
 //set original attributes of sections
 gameOverScreen.setAttribute("style", "visibility: hidden");
@@ -139,7 +138,6 @@ let score = 0;
 const submitButtonHandler = (event) => {
 
     event.preventDefault();
-    console.log(messageEl);
     submitButton.style.visibility = 'hidden';
     nextButton.style.visibility = 'visible';
     
@@ -211,102 +209,100 @@ const gameOver = () => {
     gameOverScreen.style.visibility = "visible";
 
     let finalScore = document.getElementById("final-score");
-    console.log(finalScore);
     finalScore.textContent = score;
 }
 
 let highScores = [];
-let users = [];
+let usernames = [];
 
 const saveScoreButtonHandler = async (event) => {
-    event.preventDefault();
-
-    try {
-        await saveScore();
-        await getQuizScoreData();
-
-        if(!scores) {
-            console.log("no scores", scores);
-        } else {
-            console.log(scores);
-        }
-
-        highScores = scoreData.score;  
-        users = scoreData.user_id.username;   
-
-        scores.forEach(renderScore);
     
-    } catch(error) {
-    console.error('Error fetching quiz question:', error);
-    };
+    try {
+        event.preventDefault();
+
+        await saveScore();
+
+        await displayQuizScores();
+
+    } catch (error) {
+        console.error("Error handling save score:", error);
+    }
 
     gameOverScreen.style.display = "none";
     scoreboardScreen.style.visibility = "visible";
-}
+};
 
+const displayQuizScores = async () => {
+    try {
+        const scoreData = await getQuizScoreData();
+
+        if(!scoreData) {
+            console.log("No scores available.");
+            return;
+        }
+        
+        console.log(scoreData);
+        highScores = score;  
+        usernames = user.username;   
+
+        scoreData.forEach((scoreData) => renderScore(usernames, highScores))
+    } catch (error) {
+        console.error("Error fetching quiz scores:", error);
+    }
+};
 
 const saveScore = async () => {
     // Get the current path from window.location.pathname
     const path = window.location.pathname;
 
     // Extract the id from the path (assuming the last segment is the id)
-    const id = path.split('/').pop();
-    const quiz_id = id;
-    console.log(id)
+    let quiz_id = path.split('/').pop();
+    const user_id = 3;
 
-    if ( quiz_id && score) {
-        try {
-            const response = await fetch(`/api/score`, {
-            method: 'POST',
-            body: JSON.stringify({ quiz_id, score }),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            });
-        
-            if (response.ok) {
-            // document.location.replace('/quiz');
-            // alert('Score saved');
-            // } else {
-            alert('Failed to save score');
-            }
-       } catch(error) {
-        console.error('Error saving score:', error);
-        alert('An error occurred while saving the score.');
-       }
-
-    } else {
-        alert('Quiz ID and score must be provided.');
+    if ( quiz_id && user_id && score) {
+        const response = await fetch(`/api/score`, {
+        method: 'POST',
+        body: JSON.stringify({ quiz_id, user_id, score }),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        });
+    
+        if (response.ok) {
+        // document.location.replace('/quiz');
+        alert('Score saved');
+        } else {
+        alert('Failed to save score');
+        }
     }
-}
-
-
+};
 
 const getQuizScoreData = async() => {
     
-        try {
-            // Get the current path from window.location.pathname
-            const path = window.location.pathname;
-    
-            // Extract the id from the path (assuming the last segment is the id)
-            const id = path.split('/').pop();
-            
-            const response = await fetch(`/api/score/quiz/${id}`);
-    
-            if(!response.ok) {
-                throw new Error(`HTTP error. Status: ${response.status}`);
-            }
-    
-            const scores = await response.json();
+    try {
+        console.log("quiz score data function being used");
+        // Get the current path from window.location.pathname
+        const path = window.location.pathname;
 
-    
-        } catch (error) {
-            console.error('Error fetching question:', error);
+        // Extract the id from the path (assuming the last segment is the id)
+        const id = path.split('/').pop();
+        
+        const response = await fetch(`/api/score/quiz/${id}`);
+
+        if(!response.ok) {
+            throw new Error(`HTTP error. Status: ${response.status}`);
         }
+
+        return await response.json();
+
+    } catch (error) {
+        console.error('Error fetching question:', error);
+        return null;
+    }
 };
 
 //render scores dynamically 
-const renderScore = () => {
+const renderScore = (username, highScore) => {
 
     const scoreRowEl = document.createElement("tr");
     const usernameEl = document.createElement("td");
@@ -324,6 +320,12 @@ const renderScore = () => {
     choiceA.textContent = currentQuestion.choice_a;
 };
 
+const returnHomeButtonHandler = (event) => {
+    event.preventDefault();
+
+    document.location.replace('/quiz');
+
+}
 
 // document.querySelector('#submit-choice').addEventListener('click', submitChoice);
 document.querySelector('#start-button').addEventListener('click', startButtonHandler);
@@ -336,3 +338,6 @@ document.querySelector('#submit-button').addEventListener('click', submitButtonH
 
 //Handler for the saveScore button on quiz-page
 document.querySelector('#save-score').addEventListener('click', saveScoreButtonHandler);
+
+//Handler for return Home button
+document.querySelector('#return-home').addEventListener('click', returnHomeButtonHandler);
