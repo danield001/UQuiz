@@ -11,16 +11,16 @@
 
 <!--quiz builder choosing questions-->
 <div>
-    <h1 class = "title is-1">Build own quiz by category or creator</h1>
+    <h1 class = "title is-1">Build own quiz by category or creator {{category.category_name}}</h1>
     <form>
         <div class="field has-addons">
             <div class="control is-expanded">
                 <div class="select is-fullwidth">
                 <select name="category">
-                    {{#each categories as |category| }}
+                    {{quiz.questions.category.category_name}}
                     <h2>{{category.category_name}}</h2>
                     {{!-- <option value="{{category.category_name}}">{{category.category_name}}</option> --}}
-                    {{/each}}
+                    
                 </select>
                 </div>
             </div>
