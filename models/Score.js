@@ -1,33 +1,38 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-//create QuizQuestion model
-class QuizQuestion extends Model {}
+//create Score model
+class Score extends Model {}
 
-//create fields/columns for quizquestion model
-QuizQuestion.init(
+//create fields/columns for score model
+Score.init(
     {
         id: {
             type: DataTypes.INTEGER,
-            allowNull: true,
+            allowNull: false,
             primaryKey: true,
             autoIncrement: true,
-        },
-        question_id: {
-            type: DataTypes.INTEGER,
-            references: {
-                model: 'question',
-                key: 'id',
-                unique: false
-            }
         },
         quiz_id: {
             type: DataTypes.INTEGER,
             references: {
                 model: 'quiz',
                 key: 'id',
+                unique: false,
+                onUpdate: 'CASCADE',
+                onDelete: 'CASCADE',
+            }
+        },
+        user_id: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: 'user',
+                key: 'id',
                 unique: false
             }
+        },
+        score: {
+            type: DataTypes.INTEGER,
         },
     },
     {
@@ -35,8 +40,8 @@ QuizQuestion.init(
         timestamps: false,
         freezeTableName: true,
         underscored: true,
-        modelName: 'quizQuestion'
+        modelName: 'score'
     }
 );
 
-module.exports = QuizQuestion;
+module.exports = Score;

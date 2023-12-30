@@ -2,6 +2,7 @@
 const quizHome = document.getElementById("quiz-home");
 const quizQuestionSet = document.getElementById("quiz-question-set");
 const gameOverScreen = document.getElementById("game-over-screen");
+const scoreboardScreen = document.getElementById("scoreboard-screen");
 
 //set variables to access buttons including choices buttons
 const startButton = document.getElementById("start-button");
@@ -11,7 +12,14 @@ const submitButton = document.getElementById("submit-button");
 //set original attributes of sections
 gameOverScreen.setAttribute("style", "visibility: hidden");
 quizQuestionSet.setAttribute("style", "visibility: hidden");
-quizHome.setAttribute("style", "display: flex");
+quizHome.setAttribute("style", "display: block");
+scoreboardScreen.setAttribute("style", "visibility: hidden");
+
+//Identify root element for rendering messages
+const messageEl = document.getElementById("message-element");
+
+//Identify root element for rendering table rows for score data
+const scoreBoardEl = document.getElementById("score-board-element");
 
 //Identify positions for question data in quizQuestionSet section
 const choiceA = document.getElementById("choice-a");
@@ -20,8 +28,6 @@ const choiceC = document.getElementById("choice-c");
 const choiceD = document.getElementById("choice-d");
 const questionBody = document.getElementById("question-body");
 const questionCreator = document.getElementById("question-creator");
-
-const correctAnswerEl = document.getElementById("answer");
 
 const radioValA = document.getElementById("radio-value-a");
 const radioValB = document.getElementById("radio-value-b");
@@ -35,10 +41,14 @@ const getQuizData = async(event) => {
         event.preventDefault();
     }
 
-    console.log('I can hear you');
-
     try {
-        const response = await fetch(`/api/quiz/data/1`);
+        // Get the current path from window.location.pathname
+        const path = window.location.pathname;
+
+        // Extract the id from the path (assuming the last segment is the id)
+        const id = path.split('/').pop();
+
+        const response = await fetch(`/api/quiz/data/${id}`);
 
         if(!response.ok) {
             throw new Error(`HTTP error. Status: ${response.status}`);
@@ -52,19 +62,16 @@ const getQuizData = async(event) => {
     }
 };
 
-
-
 //current question array to link when rendering text
 let currentQuestionIndex = 0;
 
 const startButtonHandler = async (event) => {
     event.preventDefault();
 
-    console.log('start button clicked');
-
     startButton.disabled = true;
     quizHome.style.display = "none";
     quizQuestionSet.style.visibility = "visible";
+    nextButton.style.visibility = "hidden";
 
     try {
         await getQuizData();
@@ -77,7 +84,7 @@ const startButtonHandler = async (event) => {
         questions.forEach(renderQuestion);
 
     } catch(error) {
-        console.error('Error fetching question:', error);
+        console.error('Error fetching quiz question:', error);
     }
 };
     
@@ -100,6 +107,14 @@ const renderQuestion = () => {
 
 const nextButtonHandler = (event) => {
     event.preventDefault();
+    submitButton.style.visibility = 'visible';
+    nextButton.style.visibility = 'hidden';
+
+    while (messageEl.firstChild) {
+        messageEl.removeChild(messageEl.firstChild);
+    }
+
+    $('input[type="radio"]').prop('checked', false);
 
     currentQuestionIndex ++;
 
@@ -111,6 +126,8 @@ const nextButtonHandler = (event) => {
         quizHome.style.display = "none";
         quizQuestionSet.style.display = "none";
         gameOverScreen.style.visibility = "visible";
+
+        gameOver();
     }
 }
 
@@ -121,55 +138,193 @@ let score = 0;
 const submitButtonHandler = (event) => {
 
     event.preventDefault();
+    submitButton.style.visibility = 'hidden';
+    nextButton.style.visibility = 'visible';
     
     const guessEl = $('input:checked');
     const guess = guessEl.val();
-    console.log(guess, "guess");
+
+    if(!$('input:checked')) {
+        //Render message
+        console.log('no input checked');
+        const responseEl = $('<h2>');     
+        responseEl.text("Please select a response to continue.");
+        messageEl.append(responseEl);
+    }
 
     if(guess === questions[currentQuestionIndex].answer) {
         score++;
         console.log(score);
-
-        answerTextEl.textContent = "CORRECT!";
-
-        setTimeout(clearMessage, 500);
-        const clearMessage = () => answerTextEl.textContent = " ";
-    } else {
         
-        const checkAnswerEl = document.getElementById("check-answer");
+        //Render message
+        const responseEl = document.createElement("h2");     
+        responseEl.textContent="CORRECT!";
+        messageEl.append(responseEl);
 
-        const answerTextEl = $('<span id="answer">');
-        const responseTextEl = $('<h3>');
-        const responseEl = $('<h2>');
-    
-        answerTextEl.text = $(``)
-        responseTextEl.text = $("The correct answer is: ");
-        responseEl.text = $("WRONG!");
+        let clearMessage = () => {
+            if (messageEl instanceof Element) {
+              // If messageEl is a regular DOM element
+              messageEl.innerHTML = '';
+            } else if (messageEl instanceof jQuery) {
+              // If messageEl is a jQuery object
+              messageEl.empty();
+            } else {
+              console.error('Unsupported messageEl type:', messageEl);
+            }
+          };
+        const myResponse = setTimeout(clearMessage, 5000); 
 
-
-    
-        correctAnswerEl.textContent = questions[currentQuestionIndex].answer;
-        setTimeout(clearMessage, 500);
-        clearMessage = () => answerTextEl.textContent = " ";
-
-    }
-
-    //Add less than length so to trigger action at end of questions
-    currentQuestionIndex++;
-    if (currentQuestionIndex < questionBody.length) {
-
-    renderQuestion();
     } else {
-    gameOver();
-    };
+        submitButton.style.visibility = 'hidden';
+        nextButton.style.visibility = 'visible';
+
+        const answerTextEl = document.createElement("span");
+        answerTextEl.setAttribute("id", "answer");
+        answerTextEl.textContent = `The correct answer is: ${questions[currentQuestionIndex].answer}`;
+
+        const responseEl = document.createElement("h2");
+        responseEl.textContent = "WRONG!";
+
+        responseEl.append(answerTextEl);
+        messageEl.append(responseEl);
+
+        let clearMessage = () => {
+            if (messageEl instanceof Element) {
+              // If messageEl is a regular DOM element
+              messageEl.innerHTML = '';
+            } else if (messageEl instanceof jQuery) {
+              // If messageEl is a jQuery object
+              messageEl.empty();
+            } else {
+              console.error('Unsupported messageEl type:', messageEl);
+            }
+          };
+
+        const myResponse = setTimeout(clearMessage, 5000); 
+    }
 }
 
-const gameOver= () => {
+const gameOver = () => {
     quizQuestionSet.style.display = "none";
     gameOverScreen.style.visibility = "visible";
 
     let finalScore = document.getElementById("final-score");
     finalScore.textContent = score;
+}
+
+let highScores = [];
+let usernames = [];
+
+const saveScoreButtonHandler = async (event) => {
+    
+    try {
+        event.preventDefault();
+
+        await saveScore();
+
+        await displayQuizScores();
+
+    } catch (error) {
+        console.error("Error handling save score:", error);
+    }
+
+    gameOverScreen.style.display = "none";
+    scoreboardScreen.style.visibility = "visible";
+};
+
+const displayQuizScores = async () => {
+    try {
+        const scoreData = await getQuizScoreData();
+
+        if(!scoreData) {
+            console.log("No scores available.");
+            return;
+        }
+        
+        console.log(scoreData);
+        highScores = score;  
+        usernames = user.username;   
+
+        scoreData.forEach((scoreData) => renderScore(usernames, highScores))
+    } catch (error) {
+        console.error("Error fetching quiz scores:", error);
+    }
+};
+
+const saveScore = async () => {
+    // Get the current path from window.location.pathname
+    const path = window.location.pathname;
+
+    // Extract the id from the path (assuming the last segment is the id)
+    let quiz_id = path.split('/').pop();
+    const user_id = 3;
+
+    if ( quiz_id && user_id && score) {
+        const response = await fetch(`/api/score`, {
+        method: 'POST',
+        body: JSON.stringify({ quiz_id, user_id, score }),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        });
+    
+        if (response.ok) {
+        // document.location.replace('/quiz');
+        alert('Score saved');
+        } else {
+        alert('Failed to save score');
+        }
+    }
+};
+
+const getQuizScoreData = async() => {
+    
+    try {
+        console.log("quiz score data function being used");
+        // Get the current path from window.location.pathname
+        const path = window.location.pathname;
+
+        // Extract the id from the path (assuming the last segment is the id)
+        const id = path.split('/').pop();
+        
+        const response = await fetch(`/api/score/quiz/${id}`);
+
+        if(!response.ok) {
+            throw new Error(`HTTP error. Status: ${response.status}`);
+        }
+
+        return await response.json();
+
+    } catch (error) {
+        console.error('Error fetching question:', error);
+        return null;
+    }
+};
+
+//render scores dynamically 
+const renderScore = (username, highScore) => {
+
+    const scoreRowEl = document.createElement("tr");
+    const usernameEl = document.createElement("td");
+    const highScoreEl = document.createElement("td");
+
+    usernameEl.textContent=`username, ${username}`;
+    highScoreEl.textContent=`highScore, ${highScore}`;
+
+    usernameEl.append(highScoreEl);
+    scoreRowEl.append(usernameEl);
+    scoreBoardEl.append(scoreRowEl);
+
+    var currentQuestion = questions[currentQuestionIndex];
+    questionBody.textContent = currentQuestion.question_body;
+    choiceA.textContent = currentQuestion.choice_a;
+};
+
+const returnHomeButtonHandler = (event) => {
+    event.preventDefault();
+
+    document.location.replace('/quiz');
+
 }
 
 // document.querySelector('#submit-choice').addEventListener('click', submitChoice);
@@ -180,3 +335,9 @@ document.querySelector('#next-button').addEventListener('click', nextButtonHandl
 
 //Handler for the submitChoice answer on quiz-page
 document.querySelector('#submit-button').addEventListener('click', submitButtonHandler);
+
+//Handler for the saveScore button on quiz-page
+document.querySelector('#save-score').addEventListener('click', saveScoreButtonHandler);
+
+//Handler for return Home button
+document.querySelector('#return-home').addEventListener('click', returnHomeButtonHandler);

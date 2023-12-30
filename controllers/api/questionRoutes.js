@@ -5,7 +5,7 @@ const router = require('express').Router();
 
 
 //GET request that will dynamically render options for the category and user select menu 
-router.get('/', withAuth, async (req, res) => {
+router.get('/',  withAuth, async (req, res) => {
     try {
         const dbQuestionData = await Question.findAll({
             include: [
@@ -19,7 +19,7 @@ router.get('/', withAuth, async (req, res) => {
             ],
         });
         const questionDetail = dbQuestionData.map((questionDetail) =>
-        Question.get({plain: true })
+            Question.get({ plain: true })
         );
         res.render("quiz", {
             questionDetail
@@ -33,7 +33,7 @@ router.get('/', withAuth, async (req, res) => {
 router.get('/:category_id', async (req, res) => {
     try {
         const questionDisp = await Question.findAll({
-            where: { category_id:  req.params.category_id }
+            where: { category_id: req.params.category_id }
         });
         if (!questionDisp) {
             res.status(400);
