@@ -13,3 +13,7 @@ body {
     --secondary_3: #FFD700;
     --main_background: #FFDF00;  
 }
+
+button:hover{
+    transform: scale(1.05);
+}
