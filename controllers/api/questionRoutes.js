@@ -33,7 +33,7 @@ router.get('/example', async (req, res) => {
 router.get('/:category_id', async (req, res) => {
     try {
         const questionDisp = await Question.findAll({
-            where: { category_id:  req.params.category_id }
+            where: { category_id: req.params.category_id }
         });
         if (!questionDisp) {
             res.status(400);

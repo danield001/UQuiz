@@ -3,19 +3,19 @@ console.log('script loaded');
 const loginFormHandler = async (event) => {
     event.preventDefault();
 
-    const email = document.querySelector('#email-login').value.trim();
+    const email_address = document.querySelector('#email-login').value.trim();
     const password = document.querySelector('#password-login').value.trim();
 
-    if (email && password) {
+    if (email_address && password) {
         try {
             const response = await fetch('/api/users/login', {
                 method: 'POST',
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({ email_address, password }),
                 headers: { 'Content-Type': 'application/json' },
             });
 
             if (response.ok) {
-                document.location.replace('/homepage');
+                document.location.replace('/');
             } else {
                 alert('Failed to Log In');
             }
@@ -29,23 +29,20 @@ const signupFormHandler = async (event) => {
     event.preventDefault();
 
     const username = document.querySelector('#username-signup').value.trim();
-    const email = document.querySelector('#email-signup').value.trim();
+    const email_address = document.querySelector('#email-signup').value.trim();
     const password = document.querySelector('#password-signup').value.trim();
-    console.log(username, "username");
-    console.log(email, "email");
-    console.log(password, "password");
 
-    if (username && email && password) {
+    if (username && email_address && password) {
         try {
             const response = await fetch('/api/users', {
                 method: 'POST',
-                body: JSON.stringify({ username, email, password }),
+                body: JSON.stringify({ username, email_address, password }),
                 headers: { 'Content-Type': 'application/json' },
             });
 
             if (response.ok) {
 
-                document.location.replace('/homepage');
+                document.location.replace('/');
             } else {
                 alert('Failed to Sign Up');
             }

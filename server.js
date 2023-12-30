@@ -7,11 +7,22 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const exphbs = require('express-handlebars');
 const app = express();
 const PORT = process.env.PORT || 3001;
-const hbs = exphbs.create({ });
+const hbs = exphbs.create({ 
+  helpers: {
+    eq: function (v1, v2) {
+        return v1 === v2;
+    }
+}
+});
 
 const sess = {
   secret: 'Super secret secret',
-  cookie: {},
+  cookie: {
+    maxAge: 60 * 60 * 100,
+    httpOnly: true,
+    secure: false,
+    sameSite: 'strict',
+  },
   resave: false,
   saveUninitialized: true,
   store: new SequelizeStore({
@@ -29,8 +40,28 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
+app.get('/', (req, res) => {
+  res.render('homepage', { loggedIn: true });
+});
 
 app.use(routes);
+
+// server-side routes
+app.get('/', (req, res) => {
+  res.render('homepage');
+});
+
+app.get('/quiz', (req, res) => {
+  res.render('quiz');
+});
+
+app.get('/selectQuiz', (req, res) => {
+  res.render('quiz-page');
+});
+
+app.get('/account', (req, res) => {
+  res.render('account');
+});
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log('Now listening'));
 });
