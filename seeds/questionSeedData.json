@@ -215,7 +215,7 @@
 {
   "question_body": " Which actor played the role of Iron Man in the Marvel Cinematic Universe? ",
   "answer": " Robert Downey Jr.",
-  "choice":" Robert Downey Jr. ",
+  "choice_a":" Robert Downey Jr. ",
   "choice_b":" Chris Evans ",
   "choice_c":" Chris Hemsworth ",
   "choice_d":" Mark Ruffalo ",
@@ -225,7 +225,7 @@
   {
   "question_body": " Who is the lead vocalist of the band Coldplay? ",
   "answer": " Chris Martin ",
-  "choice":" Chris Martin ",
+  "choice_a":" Chris Martin ",
   "choice_b":" Adam Levine ",
   "choice_c":" Justin Timberlake ",
   "choice_d":" Brandon Flowers ",
@@ -235,7 +235,7 @@
   {
   "question_body": " Which famous director directed the movie 'The Dark Knight'? ",
   "answer": " Christopher Nolan ",
-  "choice":" Martin Scorsese ",
+  "choice_a":" Martin Scorsese ",
   "choice_b":" Quentin Tarantino ",
   "choice_c":" Christopher Nolan ",
   "choice_d":" Steven Spielberg ",
@@ -513,7 +513,7 @@
   {
   "question_body": " Who is the fastest man in the world? ",
   "answer": " Usain Bolt ",
-  "choice_a":") Carl Lewis ",
+  "choice_a":" Carl Lewis ",
   "choice_b":" Usain Bolt ",
   "choice_c":" Justin Gatlin ",
   "choice_d":" Jesse Owens ",
@@ -801,7 +801,7 @@
   "answer": " Aretha Franklin ",
   "choice_a":" Whitney Houston ",
   "choice_b":" Mariah Carey ",
-  "choice_c":") Diana Ross ",
+  "choice_c":" Diana Ross ",
   "choice_d":" Aretha Franklin ",
   "category_id": 6,
   "created_by_user_id":4

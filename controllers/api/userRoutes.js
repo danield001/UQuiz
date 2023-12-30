@@ -1,16 +1,12 @@
 const router = require('express').Router();
-const { User } = require('../../models/index');
-const path = require('path');
-const express = require('express'); // Import express
-
-const app = express();
-app.use(express.static(path.join(__dirname, 'public')));
+const { User } = require('../../models');
 
 router.post('/', async (req, res) => {
     try {
+        console.log(req.body.username, req.body.email, req.body.password);
         const dbUserData = await User.create({
             username: req.body.username,
-            email: req.body.email,
+            email_address: req.body.email,
             password: req.body.password,
         });
 
@@ -29,7 +25,8 @@ router.post('/login', async (req, res) => {
     try {
         const dbUserData = await User.findOne({
             where: {
-                email: req.body.email
+                //Model uses the key "email_address"
+                email_address: req.body.email
             },
         });
         if (!dbUserData) {

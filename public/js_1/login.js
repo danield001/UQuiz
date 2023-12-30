@@ -15,7 +15,7 @@ const loginFormHandler = async (event) => {
             });
 
             if (response.ok) {
-                document.location.replace('/');
+                document.location.replace('/homepage');
             } else {
                 alert('Failed to Log In');
             }
@@ -31,6 +31,9 @@ const signupFormHandler = async (event) => {
     const username = document.querySelector('#username-signup').value.trim();
     const email = document.querySelector('#email-signup').value.trim();
     const password = document.querySelector('#password-signup').value.trim();
+    console.log(username, "username");
+    console.log(email, "email");
+    console.log(password, "password");
 
     if (username && email && password) {
         try {
@@ -41,7 +44,8 @@ const signupFormHandler = async (event) => {
             });
 
             if (response.ok) {
-                document.location.replace('/');
+
+                document.location.replace('/homepage');
             } else {
                 alert('Failed to Sign Up');
             }

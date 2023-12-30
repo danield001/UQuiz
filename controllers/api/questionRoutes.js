@@ -1,11 +1,10 @@
-const withAuth = require('../../utils/auth');
-const { Question, Category } = require('../../models/index')
-
 const router = require('express').Router();
-
+const { Question, Category } = require('../../models')
+const withAuth = require('../../utils/auth');
 
 //GET request that will dynamically render options for the category and user select menu 
-router.get('/',  withAuth, async (req, res) => {
+//localhost:3001/api/questions/example
+router.get('/example', async (req, res) => {
     try {
         const dbQuestionData = await Question.findAll({
             include: [
@@ -18,13 +17,14 @@ router.get('/',  withAuth, async (req, res) => {
                 },
             ],
         });
-        const questionDetail = dbQuestionData.map((questionDetail) =>
-        Question.get({plain: true })
-        );
-        res.render("quiz", {
-            questionDetail
+        const questions = dbQuestionData.map((question) =>
+        question.get({ plain: true }));
+        
+        res.render('example', {
+            questions
         });
     } catch (err) {
+        console.error(err); // Log the error to the console for debugging
         res.status(500).json(err);
     }
 });
