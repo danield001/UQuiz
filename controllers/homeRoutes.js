@@ -19,6 +19,38 @@ router.get("/homepage", (req, res)=>{
   res.render("homepage")
 })
 
+//GET request at this route  /api/quiz'
+router.get('/quiz', async (req, res) => {
+    try {
+        //Get all quizzes and JOIN with question data
+        const dbQuizData = await Quiz.findAll({
+            include: [
+                {
+                    model: Question,
+                    as: 'questions',
+                    attributes: [
+                        'id',
+                        'question_body',
+                        'category_id',
+                        'created_by_user_id'
+                    ],
+                }
+            ],
+        });
+        // Serialize data so the template can read it
+        const quizzes = dbQuizData.map((quiz) => quiz.get({ plain:true }));
+
+        // // Pass serialized data and session flag into template
+        res.render("quiz", {
+            quizzes,
+            // logged_in: req.session.logged_in 
+        });
+
+    } catch (err) {
+        res.status(500).json({ error: 'Internal Server Error', details: err.message });
+    }
+});
+
 //GET request at this route: http://localhost:3001/quiz/:id
 //get request to render the page
 router.get("/quiz/:id", async (req, res) => {

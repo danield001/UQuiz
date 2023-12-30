@@ -21,5 +21,30 @@
         "username": "Libby55",
         "email_address": "libster@gmail.com",
         "password": "lobsterface!"
+    },
+    {
+        "id": 5,
+        "username": "Oscar14",
+        "email_address": "ozzie@gmail.com",
+        "password": "Ostrichio!"
+    },
+    {
+        "id": 6,
+        "username": "Polkaface",
+        "email_address": "polly34@gmail.com",
+        "password": "pol88"
+    },
+    {
+        "id": 7,
+        "username": "Will",
+        "email_address": "willis@gmail.com",
+        "password": "11rstpqu2"
+    },
+    {
+        "id": 8,
+        "username": "Tripper",
+        "email_address": "gladystripply@gmail.com",
+        "password": "unicornstars"
     }
+    
 ]
