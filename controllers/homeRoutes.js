@@ -3,13 +3,13 @@ const express = require('express')
 const path = require('path')
 
 const withAuth = require('../utils/auth');
-const { Question, Quiz, QuizQuestion, User, Score } = require('../models/index');
+const { Question, Quiz, QuizQuestion } = require('../models/index');
 
 router.get("/login", (req, res)=>{
   res.render("login")
 })
 
-//GET request at this route '/quiz' use quiz-home handlebars file
+//GET request at this route  /quiz'
 router.get('/quiz', async (req, res) => {
     try {
         //Get all quizzes and JOIN with question data
@@ -61,18 +61,26 @@ router.get("/quiz/:id", async (req, res) => {
     const dbQuizData = await Quiz.findByPk(req.params.id, {
       include: [
         {
-          model: User,
-          as: "user",
+          model: Question,
+          through: QuizQuestion,
+          as: "questions",
           attributes: [
-            "user_id",
-            "score",
-           "username"
+            "id",
+            "question_body",
+            "choice_a",
+            "choice_b",
+            "choice_c",
+            "choice_d",
+            "answer",
+            "created_by_user_id",
           ],
         },
       ],
     });
-    console.log(dbQuizData);
+
     const quizPage = dbQuizData.get({ plain: true });
+
+    console.log("Rendering quiz page:", quizPage);
 
     res.render("quiz-page", {
       quizPage
