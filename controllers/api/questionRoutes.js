@@ -1,11 +1,14 @@
-const withAuth = require('../../utils/auth');
-const { Question, Category } = require('../../models/index')
-
 const router = require('express').Router();
+const express = require('express');
+const { Question, Category } = require('../../models/index')
+const path = require('path');
+
+const app = express();
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 //GET request that will dynamically render options for the category and user select menu 
-router.get('/',  withAuth, async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const dbQuestionData = await Question.findAll({
             include: [
@@ -48,11 +51,20 @@ router.get('/:category_id', async (req, res) => {
 });
 
 // need to ensure question data is being send in correctly from the views
-router.post('/', withAuth, async (req, res) => {
+router.post('/questionSubmission', async (req, res) => {
     try {
-        const questionData = Question.create(req.body);
-        res.status(200).json(questionData);
+        const questionData = Question.create({
+            question_body: req.params.question_body,
+            choice_a: req.params.choice_a,
+            choice_b: req.params.choice_b,
+            choice_c: req.params.choice_c,
+            choice_d: req.params.choice_d,
+            answer: req.params.answer,
+            category_id: req.params.category_id,
+            created_by_user_id: req.session.user_id,
+        });
     } catch (err) {
+        console.log(err);
         res.status(400).json(err);
     }
 });

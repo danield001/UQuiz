@@ -31,8 +31,10 @@ const signupFormHandler = async (event) => {
     const username = document.querySelector('#username-signup').value.trim();
     const email_address = document.querySelector('#email-signup').value.trim();
     const password = document.querySelector('#password-signup').value.trim();
+    const t_and_c = document.querySelector('#t-and-c');
 
-    if (username && email_address && password) {
+
+    if (username && email_address && password, t_and_c === true) {
         try {
             const response = await fetch('/api/users', {
                 method: 'POST',
@@ -49,7 +51,7 @@ const signupFormHandler = async (event) => {
             console.error('Error during signup:', error);
         }
     }
-};
+}
 
 document.querySelector('#login-form').addEventListener('click', loginFormHandler);
 document.querySelector('#signup-form').addEventListener('click', signupFormHandler);

@@ -39,15 +39,17 @@
             Create Your Own Question
         </h2>
 
-        <div class="control" style="padding-bottom: 10px;">
-            <label style="padding-right: 30px; font-size: 150%; font-weight: 200;">Select the Category</label>
-          <div class="select">
-            <select name="category">
-                    {{#each questionDetail as |questionDetails| }}
-                    <option value="{{questionDetail.category_name}}">{{questionDetail.category_name}}</option>
-                    {{/each}}
-                </select>
-                </div>
+<div class="control" style="padding-bottom: 10px;">
+    <label style="padding-right: 30px; font-size: 150%; font-weight: 200;">Select the Category</label>
+    <div class="select">
+        <select name="category" id="category">
+            {{#each categoryDisp}}
+                <option value="{{id}}">{{category_name}}</option>
+            {{/each}}
+        </select>
+    </div>
+</div>
+
 
         <div class="field">
   <h2 style="font-size: 150%; font-weight: 200;">
@@ -111,32 +113,17 @@
 
 <div style="display: inline-flex; ">
 
-<div class="field" style="padding: 10px;">
-  <label class="label">Answer A</label>
-  <div class="control">
-    <input class="control" id="radio-value-a" value="true" type="checkbox">
-  </div>
+<div style="margin: 10px; diplay: inline-flex;">
+  <label>A</label>
+  <input style="margin-right: 25px;" type="radio" name="answer" value="A" id="answer-a">
+  <label>B</label>
+  <input style="margin-right: 25px;" type="radio" name="answer" value="B" id="answer-b">
+  <label>C</label>
+  <input style="margin-right: 25px;" type="radio" name="answer" value="C" id="answer-c">
+  <label>D</label>
+  <input style="margin-right: 25px;" type="radio" name="answer" value="D" id="answer-d">
 </div>
 
-<div class="field" style="padding: 10px;">
-  <label class="label">Answer B</label>
-  <div class="control">
-    <input class="control" id="radio-value-b" value="true" type="checkbox">
-    </div>
-</div>
-
-<div class="field" style="padding: 10px;">
-  <label class="label">Answer C</label>
-  <div class="control">
-    <input class="control" id="radio-value-c" value="true" type="checkbox">
-    </div>
-</div>
-
-<div class="field" style="padding: 10px;">
-  <label class="label">Answer D</label>
-  <div class="control">
-    <input class="control" id="radio-value-d" value="true" type="checkbox">
-    </div>
 </div> </br>
 
 <div class="field">
@@ -151,6 +138,5 @@
 
     </div>
 
+<script src="/js_1/questionSubmission.js"></script>
 </main>
-
-<script src="/controllers/homeRoutes.js"></script>
