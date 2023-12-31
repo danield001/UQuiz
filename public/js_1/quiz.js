@@ -284,7 +284,7 @@ const getQuizScoreData = async() => {
         // Extract the id from the path (assuming the last segment is the id)
         const id = path.split('/').pop();
         
-        const response = await fetch(`/api/quiz/score/${id}`);
+        const response = await fetch(`/api/quiz/data/score/${id}`);
 
         if(!response.ok) {
             throw new Error(`HTTP error. Status: ${response.status}`);

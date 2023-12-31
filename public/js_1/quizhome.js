@@ -1,3 +1,5 @@
+
+
 //Set variable to access button
 const submitCategoryButton = document.getElementById("submit-category");
 
@@ -5,40 +7,81 @@ const submitCategoryButton = document.getElementById("submit-category");
 const messageEl = document.getElementById("message-element");
 
 const categorychoice = document.getElementById("category-choice");
-//add event listener to sibmit category choice
-const submitCategoryHandler = async () => {
+
+let categories = [];
+
+let categoryQuestions = [];
+
+const submitCategoryHandler = async (event) => {
+    event.preventDefault();
+    
     try { 
        
         await getCategoryData();
-        await createQuiz();
-        await displayMessage();
+
+        console.log(categoryQuestions);
+
+
+
+        // await createQuiz();
+
+        // await displayMessage();
 
 } catch (error) {
     console.error("error handling", error);
 }
 };
 
-const getCategoryData = async (event) => {
-    event.preventDefault();
+const getCategoryData = async () => {
   
     try {
-      console.log("getCategoryData function begins");
-      let category = categorychoice.value();
-      console.log(category, "category");  // Corrected this line
-  
-      const response = await fetch(`/api/question/${category}`);  // Corrected the URL
+      const searchTerm = categorychoice.value;
+      console.log(searchTerm, "searchTerm");  
+
+      const dbCategories = ["Entertainment", "Current Affairs", "Sport", "Movies", "Politics", "Music", "History", "Geography"]
+      const index = dbCategories.indexOf(searchTerm);
+
+      if (index !== -1) {
+        console.log(`The index of ${searchTerm} is: ${index}`);
+      } else {
+        console.log(`${searchTerm} not found in the array`);
+      }
+
+      const id=(index+1)
+
+      const response = await fetch(`/api/quiz/data/category/${id}`);  
   
       if (!response.ok) {
         throw new Error(`HTTP error. Status: ${response.status}`);
       }
   
-      const categoryData = await response.json();
-      console.log(categoryData, "categoryData");
-      // Assuming categories is a global variable, you can update it like this
-      categories = categoryData.categories;
+      const array = await response.json();
+
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            // Swap array[i] and array[j]
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+      };
+      const  questions = await shuffleArray(array);
+      //This section is not working prob because it is not a defined array? 
+      const filteredQuestions = questions
+      .filter(question => question.dataValues.category_id === id) 
+      .slice(0, 5)
+      .map(question => ({
+        id: question.dataValues.id,
+        category_id: question.dataValues.category_id,
+        question_body: question.dataValues.question_body,
+        created_by_user_id: question.dataValues.created_by_user_id,
+  }));
+
+console.log(filteredQuestions);
+return filteredQuestions;
   
     } catch (error) {
       console.error('Error fetching category', error);
+      return;
     }
   };
 
