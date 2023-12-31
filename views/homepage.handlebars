@@ -1,78 +1,21 @@
-<div class="row">
-  <div class="col-auto">
-    <h2>Welcome to UQuiz, {{username}}!</h2>
-  </div>
-</div>
-<div class="card" id = "leaderboard">
-    <h3>Leaderboard</h3>
-  <div class="table-container">
-    <table class="table">
-     <!-- Your table content -->
-    </table>
-  </div>
-</div> 
-<!--heading here and form tag added with reference to whole form for js-->
-    <h3>Submit a question and answer</h3>
+<main style="background-color:#FFDF00; height: 100vh">
+    <div style="width:45%; display:inline-block; padding-top: 72px; font-family: 'Space Grotesk';">
+      <h1 style="font-weight: 500; font-size: 400%; padding-bottom: 10px; padding-left: 20px">
+    Welcome to UQuiz, <a style="font-weight:200;">{{req.session.username}}</a>!
+   </h1>
+   <h2 style = "font-family: 'Space Grotesk'; font-size: 40px; padding-bottom: 10px; padding-left: 20px">
+    Submit your questions, test your mind, have fun with your friends and family!</h2>
+    <p class="control" style="padding-left: 40px; padding-top: 20px;">
+    <button class="button is-success" type="submit" id="to-account" style="font-size: 150%; background-color: #D40000; color: #FFDF00; width: 70%;">
+      go to your account... 
+  </p>
 
-    <form class="new-question-form">
-      <div class="field has-addons">
-        <div class="field-label is-normal">
-          <label class="label">Select the Question Category</label>
-        </div>
-        <div class="control is-expanded">
-          <div class="select is-fullwidth">
-            <select id="category-input" name="questionCategory">
-              <option value="CurrentAffairs">Current Affairs</option>
-              <option value="Sports">Sports</option>
-              <option value="Entertainment">Entertainment</option>
-              <option value="Movies">Movies</option>
-              <option value="Politics">Politics</option>
-              <option value="Music">Music</option>
-              <option value="History">History</option>
-              <option value="Geography">Geography</option>
-            </select>
-          </div>
-          </div>
-      </div>
+    </div>
+    <div class = "hero-image" style="width:50%; display:inline-block; margin: 30px; padding: 30px">
+        <img src="/public/funquiz.jpg">
 
-      <div class="field">
-        <div class="control">
-        <input id= "question-input" class="input is-normal" type="text" placeholder="Enter the Question">
-        <input id="answer-input" class="input is-normal" type="text" placeholder="Enter the Answer">
-        <input id="choice-a-input" class="input is-normal" type="text" placeholder="Enter Choice A">
-        <input id="choice-b-input" class="input is-normal" type="text" placeholder="Enter Choice B">
-        <input id="choice-c-input" class="input is-normal" type="text" placeholder="Enter Choice C">
-        <input id="choice-d-input" class="input is-normal" type="text" placeholder="Enter Choice D">
-        </div>
-      </div>
+    </div>
 
-    <!-- Commented out - js will start simple and then extend into collecting image upload
-      <div class="file">
-        <label class="file-label">
-          <input class="file-input" type="file" name="quizImage">
-          <span class="file-cta">
-            <span class="file-icon">
-              <i class="fas fa-upload"></i>
-            </span>
-            <span class="file-label">
-              Choose a file…
-            </span>
-          </span>
-        </label>
-      </div> 
-      -->
+</main>
 
-    <!--submit button for whole form-->
-        <div class="field is-grouped">
-        <p class="control">
-          <a class="button is-primary">Submit</a>
-        </p>
-        </div>
-      </div>
-    </form>
-
-<div id = "playUQuiz">
-    <button id = "playuquiz" type="button">Play UQuiz</button>
-</div>
-
-<script src="./js/questionSubmit.js"></script>
+<script src="/controllers/homeRoutes.js"></script>

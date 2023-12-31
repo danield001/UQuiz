@@ -21,13 +21,14 @@ router.get('/', async (req, res) => {
                 },
             ],
         });
-        const questionDetail = dbQuestionData.map((questionDetail) =>
-            Question.get({ plain: true })
-        );
-        res.render("quiz", {
-            questionDetail
+        const questions = dbQuestionData.map((question) =>
+        question.get({ plain: true }));
+        
+        res.render('example', {
+            questions
         });
     } catch (err) {
+        console.error(err); // Log the error to the console for debugging
         res.status(500).json(err);
     }
 });

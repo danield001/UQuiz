@@ -1,22 +1,25 @@
 <div>
-    <h1 class = "title is-1">Choose your quiz</h1>
+    <h1 class = "title is-1">Choose a premade random quiz</h1>
     <!-- quiz.handlebars -->
     {{#each quizzes as |quiz|}}
     {{log quiz "response from route"}}
-    <h2>Quiz number: {{quiz.id}}</h2>
+    <button class="button is-large is-responsive" style="background-color: #D40000; color: #FFDF00">
+        <a href="/quiz/{{quiz.id}}">{{quiz.id}}</a>
+    </button>
     {{/each}}
 </div>
 
 <!--quiz builder choosing questions-->
 <div>
-    <h1 class = "title is-1">Build own quiz</h1>
+    <h1 class = "title is-1">Build own quiz by category or creator</h1>
     <form>
         <div class="field has-addons">
             <div class="control is-expanded">
                 <div class="select is-fullwidth">
                 <select name="category">
-                    {{#each questionDetail as |questionDetails| }}
-                    <option value="{{questionDetail.category_name}}">{{questionDetail.category_name}}</option>
+                    {{#each categories as |category| }}
+                    <h2>{{category.category_name}}</h2>
+                    {{!-- <option value="{{category.category_name}}">{{category.category_name}}</option> --}}
                     {{/each}}
                 </select>
                 </div>
@@ -25,6 +28,7 @@
                 <button type="submit" class="button is-primary">Choose</button>
             </div>
         </div>
+    </form>
 </div>
 
 

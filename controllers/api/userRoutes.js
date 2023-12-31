@@ -1,10 +1,5 @@
 const router = require('express').Router();
-const { User } = require('../../models/index');
-const path = require('path');
-const express = require('express'); // Import express
-
-const app = express();
-app.use(express.static(path.join(__dirname, 'public')));
+const { User } = require('../../models');
 
 router.post('/', async (req, res) => {
     try {
@@ -72,16 +67,17 @@ router.post('/logout', async (req, res) => {
     }
 });
 
-app.get('/profile', (req, res) => {
-    if (req.session.loggedIn) {
-        const userId = req.session.userId;
-        // Use the userId to fetch user-specific data or render the profile page
-        res.render('profile', { userId });
-    } else {
-        // Redirect to the login page if the user is not logged in
-        res.redirect('/login');
-    }
-});
+//What is this? 
+// app.get('/profile', (req, res) => {
+//     if (req.session.loggedIn) {
+//         const userId = req.session.userId;
+//         // Use the userId to fetch user-specific data or render the profile page
+//         res.render('profile', { userId });
+//     } else {
+//         // Redirect to the login page if the user is not logged in
+//         res.redirect('/login');
+//     }
+// });
 
 
 module.exports = router;
