@@ -1,7 +1,29 @@
 
 <main  style="background-color:#FFDF00;">
 
-        <h1 class="is-full has-text-centered" style="font-weight: 500; font-size: 350%;">Quiz {{quizPage.id}}</h1>
+        <h1 class="is-full has-text-centered" style="font-weight: 500; font-size: 350%;">Quiz {{id}}</h1>
+        <h2>These handlebars expressions work:</h2>
+        <ul>
+            <li>id, {{id}}</li>
+            <li>question.question_body, {{question.question_body}}</li>
+            <li>questions.question.answer, {{questions.question.answer}}</li>
+            <li>answer, {{answer}}</li>
+            <li>user_id, {{user_id}}</li>
+            <li>quizQuestion.question.answer, {{quizQuestion.question.answer}}</li>
+            <li>quizQuestion.questions.answer, {{quizQuestion.questions.answer}}</li>
+            <li>quizQuestions.answer, {{quizQuestion.answer}}</li>
+            <li>questions.[0].question_body, {{questions.[0].question_body}}</li>
+            {{#each questions as |question|}}
+            <li>question.question_body {{question.question_body}}</li>
+            <li>question.category_id {{question.category_id}}</li>
+            {{/each}}
+            <li>user_id, {{user_id}}</li>
+            <li>questions.[0].created_by_user_id, {{questions.[0].created_by_user_id}}</li>
+            <li>questions.[0].category_name, {{questions.[0].category_name}}</li>
+            <li>questions.[0].category_id, {{questions.[0].category_id}}</li>
+            
+
+        </ul>
 
         <section>
             <div class="card pb-6 pt-6" id="quiz-home">

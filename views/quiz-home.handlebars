@@ -1,12 +1,21 @@
 <div>
     <h1 class = "title is-1">Choose a premade random quiz</h1>
-    <!-- quiz.handlebars -->
-    {{#each quizzes as |quiz|}}
-    {{log quiz "response from route"}}
-    <button class="button is-large is-responsive" style="background-color: #D40000; color: #FFDF00">
-        <a href="/quiz/{{quiz.id}}">{{quiz.id}}</a>
-    </button>
-    {{/each}}
+
+    <!--WORKS-->
+
+<h2></h2>
+
+
+    <ul>
+        <h1>Here are the handlebars expressions that work: {{id}} </h1>
+        <li>{{id}}
+            category.category_name{{category.category_name}}
+            categories.category_name{{categories.category_name}}
+            questions.category.category_name{{questions.category.category_name}}
+            <!--WORKS-->
+            questions.[0].category.category_name{{questions.[0].category.category_name}}
+        </li>
+    </ul> 
 </div>
 
 <!--quiz builder choosing questions-->
@@ -16,13 +25,15 @@
         <div class="field has-addons">
             <div class="control is-expanded">
                 <div class="select is-fullwidth">
+               
                 <select name="category">
-                    {{quiz.questions.category.category_name}}
-                    <h2>{{category.category_name}}</h2>
-                    {{!-- <option value="{{category.category_name}}">{{category.category_name}}</option> --}}
-                    
+                    {{#each categories as |category|}}
+                    <option value="{{category_name}}">{{category_name}}</option>
+                    {{/each}}
                 </select>
+               
                 </div>
+
             </div>
             <div class="control">
                 <button type="submit" class="button is-primary">Choose</button>

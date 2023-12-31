@@ -10,9 +10,9 @@ const PORT = process.env.PORT || 3001;
 const hbs = exphbs.create({ 
   helpers: {
     eq: function (v1, v2) {
-        return v1 === v2;
-    }
-}
+        return v1 === v2;  
+    },
+  }
 });
 
 const sess = {
@@ -29,8 +29,6 @@ const sess = {
     db: sequelize
   })
 };
-
-
 
 app.use(session(sess));
 

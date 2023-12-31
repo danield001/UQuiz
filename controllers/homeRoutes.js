@@ -3,42 +3,68 @@ const express = require('express')
 const path = require('path')
 
 const withAuth = require('../utils/auth');
-const { Question, Quiz, QuizQuestion } = require('../models/index');
+const { Question, Quiz, QuizQuestion, Category } = require('../models/index');
 
 router.get("/login", (req, res)=>{
   res.render("login")
 })
 
-//GET request at this route  /quiz'
+// //GET request at this route  /quiz'
+// router.get('/quiz', async (req, res) => {
+//     try {
+//         //Get all quizzes and JOIN with question data
+//         const dbQuizData = await Quiz.findAll({
+//             include: [
+//                 {
+//                     model: Question,
+//                     as: 'questions',
+//                     attributes: [
+//                         'id',
+//                         'question_body',
+//                         'category_id',
+//                         'created_by_user_id'
+//                     ],
+//                 },
+//             ],
+//         });
+//         // Serialize data so the template can read it
+//         const quizzes = dbQuizData.map((quiz) => quiz.get({ plain:true }));
+
+//         // // Pass serialized data and session flag into template
+//         res.render("quiz-home", {
+//             quizzes,
+//             // logged_in: req.session.logged_in 
+//         });
+
+//     } catch (err) {
+//         res.status(500).json({ error: 'Internal Server Error', details: err.message });
+//     }
+// });
+//Get data for quiz building
 router.get('/quiz', async (req, res) => {
-    try {
-        //Get all quizzes and JOIN with question data
-        const dbQuizData = await Quiz.findAll({
-            include: [
-                {
-                    model: Question,
-                    as: 'questions',
-                    attributes: [
-                        'id',
-                        'question_body',
-                        'category_id',
-                        'created_by_user_id'
-                    ],
-                }
-            ],
-        });
-        // Serialize data so the template can read it
-        const quizzes = dbQuizData.map((quiz) => quiz.get({ plain:true }));
-
-        // // Pass serialized data and session flag into template
-        res.render("quiz-home", {
-            quizzes,
-            // logged_in: req.session.logged_in 
-        });
-
-    } catch (err) {
-        res.status(500).json({ error: 'Internal Server Error', details: err.message });
-    }
+  try {
+      const dbCategoryData = await Category.findAll({
+          include: [
+              {
+                  model: Question,
+                  attributes: [
+                      'id',
+                      'question_body',
+                      'created_by_user_id',
+                  ],
+              },
+          ],
+      });
+      const categories = dbCategoryData.map((category) =>
+      category.get({ plain: true }));
+      
+      res.render('quiz-home', {
+          categories
+      });
+  } catch (err) {
+      console.error(err); // Log the error to the console for debugging
+      res.status(500).json(err);
+  }
 });
 
 router.get("/example", (req, res) => {
@@ -72,19 +98,20 @@ router.get("/quiz/:id", async (req, res) => {
             "choice_c",
             "choice_d",
             "answer",
+            "category_id",
             "created_by_user_id",
           ],
         },
       ],
     });
+ 
+    const quiz = dbQuizData.get({ plain: true });
 
-    const quizPage = dbQuizData.get({ plain: true });
+    console.log("Rendering quizzes", quiz);
 
-    console.log("Rendering quiz page:", quizPage);
-
-    res.render("quiz-page", {
-      quizPage
-    });
+    return res.render("quiz-page",
+      quiz);
+    
 
   } catch (err) {
     console.error(err);

@@ -77,10 +77,8 @@ const startButtonHandler = async (event) => {
         await getQuizData();
         if(!questions) {
             console.log("no questions", questions);
-        } else {
-            console.log(questions);
         }
-        
+
         questions.forEach(renderQuestion);
 
     } catch(error) {
@@ -212,9 +210,6 @@ const gameOver = () => {
     finalScore.textContent = score;
 }
 
-let highScores = [];
-let usernames = [];
-
 const saveScoreButtonHandler = async (event) => {
     
     try {
@@ -240,12 +235,14 @@ const displayQuizScores = async () => {
             console.log("No scores available.");
             return;
         }
-        
-        console.log(scoreData);
-        highScores = score;  
-        usernames = user.username;   
+  
+        console.log("scoreData{0].score",scoreData[0].score);
+        console.log("scoreData.user_id", scoreData[0].user_id);
+        scoreData.forEach(console.log());
 
-        scoreData.forEach((scoreData) => renderScore(usernames, highScores))
+ 
+
+        scoreData.forEach(() => renderScore(scoreData.score, scoreData.user_id))
     } catch (error) {
         console.error("Error fetching quiz scores:", error);
     }
@@ -287,17 +284,19 @@ const getQuizScoreData = async() => {
         // Extract the id from the path (assuming the last segment is the id)
         const id = path.split('/').pop();
         
-        const response = await fetch(`/api/score/quiz/${id}`);
+        const response = await fetch(`/api/quiz/score/${id}`);
 
         if(!response.ok) {
             throw new Error(`HTTP error. Status: ${response.status}`);
         }
 
-        return await response.json();
+        const scoreData = await response.json();
+        console.log(scoreData[0]);
+        return scoreData;
 
     } catch (error) {
         console.error('Error fetching question:', error);
-        return null;
+        
     }
 };
 
