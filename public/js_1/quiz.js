@@ -8,6 +8,7 @@ const scoreboardScreen = document.getElementById("scoreboard-screen");
 const startButton = document.getElementById("start-button");
 const nextButton = document.getElementById("next-button");
 const submitButton = document.getElementById("submit-button");
+const returnHomeButton = document.getElementById("return-home");
 
 //set original attributes of sections
 gameOverScreen.setAttribute("style", "visibility: hidden");
@@ -266,7 +267,7 @@ const saveScore = async () => {
         });
     
         if (response.ok) {
-        // document.location.replace('/quiz');
+    
         alert('Score saved');
         } else {
         alert('Failed to save score');
