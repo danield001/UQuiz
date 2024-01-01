@@ -8,7 +8,7 @@
     
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/quiz_style.css">
-    
+    <link rel="stylesheet" href="/node_modules/aos/dist/aos.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
      <link
       href="https://fonts.googleapis.com/css2?family=Space Grotesk&family=Preahvihear:wght@700&display=swap"
@@ -17,13 +17,12 @@
 
 </head>
 
-
 <body style="background-color:#FFDF00">
     <header>
-     
-    
     <nav style="background-color:#abfaf6" class="navbar" role="navigation" aria-label="main navigation">
-      <img src="UQuiz Logo.png" width="112" height="28">  
+      <!--<div class="aos-item" data-aos="zoom-in">-->
+        <img src="UQuiz Logo.png" width="112" height="28">  
+       <!--</div>-->
     <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
      
       <span aria-hidden="true"></span>
@@ -77,6 +76,12 @@
   {{/if}}
 
 <script src="/js_1/homepage.js"></script>
+<script src="/node_modules/aos/dist/aos.js"></script>
+<script>
+      //AOS.init({
+        //easing: 'ease-in-sine'
+      //});
+    </script>
 
 </body>
 
