@@ -5,10 +5,12 @@ const path = require('path');
 
 const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
+//const AOS = require('./node_modules/aos/dist');
+//AOS.init();
 const exphbs = require('express-handlebars');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8080;
 const hbs = exphbs.create({ 
   helpers: {
     eq: function (v1, v2) {
@@ -65,3 +67,4 @@ app.get('/account', (req, res) => {
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log('Now listening'));
 });
+
