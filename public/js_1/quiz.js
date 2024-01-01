@@ -216,6 +216,9 @@ const saveScoreButtonHandler = async (event) => {
     try {
         event.preventDefault();
 
+        getQuizScoreData();
+        
+
         await saveScore();
 
         await displayQuizScores();
@@ -236,14 +239,13 @@ const displayQuizScores = async () => {
             console.log("No scores available.");
             return;
         }
-  
+        
+        console.log(scoreData[0]);
         console.log("scoreData{0].score",scoreData[0].score);
         console.log("scoreData.user_id", scoreData[0].user_id);
-        scoreData.forEach(console.log());
 
- 
 
-        scoreData.forEach(() => renderScore(scoreData.score, scoreData.user_id))
+        scoreData.forEach((score) => renderScore(score.user_id, score.score));
     } catch (error) {
         console.error("Error fetching quiz scores:", error);
     }
@@ -275,6 +277,7 @@ const saveScore = async () => {
     }
 };
 
+
 const getQuizScoreData = async() => {
     
     try {
@@ -285,7 +288,7 @@ const getQuizScoreData = async() => {
         // Extract the id from the path (assuming the last segment is the id)
         const id = path.split('/').pop();
         
-        const response = await fetch(`/api/quiz/data/score/${id}`);
+        const response = await fetch(`/api/score/data`);
 
         if(!response.ok) {
             throw new Error(`HTTP error. Status: ${response.status}`);
@@ -304,15 +307,18 @@ const getQuizScoreData = async() => {
 //render scores dynamically 
 const renderScore = (username, highScore) => {
 
+    console.log(highScore, "highScore");
+    console.log(username, "username");
+
     const scoreRowEl = document.createElement("tr");
-    const usernameEl = document.createElement("td");
+    const usernameEl = document.createElement("th");
     const highScoreEl = document.createElement("td");
 
-    usernameEl.textContent=`username, ${username}`;
-    highScoreEl.textContent=`highScore, ${highScore}`;
+    usernameEl.textContent = `${username}`;
+    highScoreEl.textContent = `${highScore}`;
 
-    usernameEl.append(highScoreEl);
     scoreRowEl.append(usernameEl);
+    scoreRowEl.append(highScoreEl);
     scoreBoardEl.append(scoreRowEl);
 
     var currentQuestion = questions[currentQuestionIndex];

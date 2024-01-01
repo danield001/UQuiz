@@ -144,16 +144,16 @@ router.get('/data/category/:id', async (req, res) => {
 
 
   
-  router.get("/example", (req, res) => {
-    res.render("example")
-  })
+//   router.get("/example", (req, res) => {
+//     res.render("example")
+//   })
   
-  router.get("/", (req, res) => {
-    res.render("homepage")
-  })
+//   router.get("/", (req, res) => {
+//     res.render("homepage")
+//   })
   
-  router.get("/account", (req, res) => {
-    res.render("account")
-  })
+//   router.get("/account", (req, res) => {
+//     res.render("account")
+//   })
   
 module.exports = router;

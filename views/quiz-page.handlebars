@@ -2,21 +2,6 @@
 <main  style="background-color:#FFDF00;">
 
         <h1 class="is-full has-text-centered" style="font-weight: 500; font-size: 350%;">Quiz {{id}}</h1>
-        <h2>These handlebars expressions work:</h2>
-        <ul>
-            <li>id, {{id}}</li>
-            <li>user_id, {{user_id}}</li>
-            <li>questions.[0].question_body, {{questions.[0].question_body}}</li>
-            {{#each questions as |question|}}
-            <li>question.question_body {{question.question_body}}</li>
-            <li>question.category_id {{question.category_id}}</li>
-            {{/each}}
-            <li>user_id, {{user_id}}</li>
-            <li>questions.[0].created_by_user_id, {{questions.[0].created_by_user_id}}</li>
-            <li>questions.[0].category_id, {{questions.[0].category_id}}</li>
-            
-
-        </ul>
 
         <section>
             <div class="card pb-6 pt-6" id="quiz-home">
@@ -91,20 +76,16 @@
 
                 <div class="card-content is-justify-content-center">
 
-                    <div class="table-container">
-                        <table class="table is-striped is-hoverable is-fullwidth">
-                            <thead>
+                    <div class="table-container is-bordered is-hoverable is-fullwidth">
+                        <table class="table">
+                            <thead >
                                 <tr>
-                                    <th>Username</th>
+                                    <th>User Id</th>
                                     <th>Score</th>
                                 </tr>
                             </thead>
                             <tbody id="score-board-element">
-                                <tr>
-                                    <td>Example username</td>
-                                    <td>Example score</td>
-
-                                </tr>
+   
                             </tbody>
                         </table>
                     </div>
