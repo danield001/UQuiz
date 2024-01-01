@@ -1,5 +1,8 @@
 <div>
-    <h1 class = "title is-1">Choose a premade random quiz</h1>
+    <h1 class = "title is-1">Choose a premade quiz</h1>
+    <div id="quiz-list">
+
+    </div>
 
 <!--quiz builder choosing questions-->
 <div>
@@ -9,9 +12,9 @@
         <div class="field has-addons">
             <div class="control is-expanded">
                 <div class="select is-fullwidth">
-                <select name="category">
+                <select name="category" id="category-choice">
                     {{#each categories as |category|}}
-                    <option id="category-choice" value="{{category_name}}">{{category_name}}</option>
+                    <option value="{{category_id}}">{{category_name}}</option>
                     {{/each}}
                 </select>
                 </div>

@@ -2,6 +2,30 @@ const router = require('express').Router();
 const { Question, Quiz, QuizQuestion, Score, Category } = require('../../models');
 const randomArrayEnsure = require('random-array-ensure');
 
+//get route for quizData to send to quiz-home js file for dynamically rendering premade quizzes
+router.get('/data', async (req, res) => {
+    try {
+        const quizData = await Quiz.findAll({
+            include: [
+                {
+                    model: Question, 
+                    through: QuizQuestion,
+                    as: "questions",
+                    attributes: [
+                        "id",
+                        "question_body", 
+                        "created_by_user_id",
+                    ],
+                }
+            ]
+        })    
+        res.status(200).json(quizData); 
+        
+    } catch (err) {
+        res.status(500).json(err, "Error getting quiz and question data");
+    }
+});
+
 //get route for quizData to send to js file to dynamically render
 router.get(`/data/:id`, async (req, res) => {
     try {
@@ -50,7 +74,7 @@ router.get('/data/score/:id', async (req, res) => {
     }});
 
     //get route for questions and categories in quiz routes /api/quiz/category/1
-//GET request at this route http://localhost:3001/api/questions for getting a quiz with the same category
+//GET request at this route http://localhost:3001/api/quiz/data/category/id for getting a quiz with the same category
 router.get('/data/category/:id', async (req, res) => {
     try {
         const questionData = await Question.findAll({
@@ -118,32 +142,7 @@ router.get('/data/category/:id', async (req, res) => {
 //         res.status(500).json(error);
 //     }});
 
-// //Get data for javascript function quizhome
-// router.get('/data/', async (req, res) => {
-//     try {
-//         const dbCategoryData = await Category.findAll({
-//             include: [
-//                 {
-//                     model: Question,
-//                     attributes: [
-//                         'id',
-//                         'question_body',
-//                         'created_by_user_id',
-//                     ],
-//                 },
-//             ],
-//         });
-//         const categories = dbCategoryData.map((category) =>
-//         category.get({ plain: true }));
-        
-//         res.render('quiz-home', {
-//             categories
-//         });
-//     } catch (err) {
-//         console.error(err); // Log the error to the console for debugging
-//         res.status(500).json(err);
-//     }
-//   });
+
   
   router.get("/example", (req, res) => {
     res.render("example")
