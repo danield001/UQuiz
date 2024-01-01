@@ -65,3 +65,5 @@ app.get('/account', (req, res) => {
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log('Now listening'));
 });
+
+
