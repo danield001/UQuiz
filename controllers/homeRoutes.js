@@ -42,10 +42,6 @@ router.get("/", (req, res) => {
 })
 
 
-router.get("/account", (req, res) => {
-  res.render("account")
-})
-
 
 
 // //GET request at this route  /quiz'
