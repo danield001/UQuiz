@@ -8,6 +8,10 @@
     "start": "node server.js",
     "seed": "node seeds/seed.js"
   },
+  "engines": {
+    "node": "21.x",
+    "npm": "8.3.1"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
