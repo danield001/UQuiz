@@ -105,10 +105,8 @@ router.get("/quiz/:id", withAuth, async (req, res) => {
 
     console.log("Rendering quizzes", quiz);
 
-    return res.render("quiz-page",
-      quiz);
-    
-
+    return res.render("quiz-page", { loggedIn: true, quiz });
+  
   } catch (err) {
     console.error(err);
     res.status(500).json({ err: 'Internal Server Error', details: err.message });

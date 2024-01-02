@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 require('dotenv').config();
+const mysql2 = require('mysql2'); // Correct package name
 
 let sequelize;
 
@@ -24,6 +25,7 @@ if (process.env.NODE_ENV === 'production') {
       host: 'localhost',
       dialect: 'mysql',
       port: 3306,
+      logging: true, // Enable logging to console
     }
   );
 }
