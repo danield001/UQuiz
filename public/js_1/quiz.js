@@ -8,6 +8,7 @@ const scoreboardScreen = document.getElementById("scoreboard-screen");
 const startButton = document.getElementById("start-button");
 const nextButton = document.getElementById("next-button");
 const submitButton = document.getElementById("submit-button");
+const returnHomeButton = document.getElementById("return-home");
 
 //set original attributes of sections
 gameOverScreen.setAttribute("style", "visibility: hidden");
@@ -77,10 +78,8 @@ const startButtonHandler = async (event) => {
         await getQuizData();
         if(!questions) {
             console.log("no questions", questions);
-        } else {
-            console.log(questions);
         }
-        
+
         questions.forEach(renderQuestion);
 
     } catch(error) {
@@ -212,13 +211,13 @@ const gameOver = () => {
     finalScore.textContent = score;
 }
 
-let highScores = [];
-let usernames = [];
-
 const saveScoreButtonHandler = async (event) => {
     
     try {
         event.preventDefault();
+
+        getQuizScoreData();
+        
 
         await saveScore();
 
@@ -241,11 +240,12 @@ const displayQuizScores = async () => {
             return;
         }
         
-        console.log(scoreData);
-        highScores = score;  
-        usernames = user.username;   
+        console.log(scoreData[0]);
+        console.log("scoreData{0].score",scoreData[0].score);
+        console.log("scoreData.user_id", scoreData[0].user_id);
 
-        scoreData.forEach((scoreData) => renderScore(usernames, highScores))
+
+        scoreData.forEach((score) => renderScore(score.user_id, score.score));
     } catch (error) {
         console.error("Error fetching quiz scores:", error);
     }
@@ -269,13 +269,14 @@ const saveScore = async () => {
         });
     
         if (response.ok) {
-        // document.location.replace('/quiz');
+    
         alert('Score saved');
         } else {
         alert('Failed to save score');
         }
     }
 };
+
 
 const getQuizScoreData = async() => {
     
@@ -287,32 +288,37 @@ const getQuizScoreData = async() => {
         // Extract the id from the path (assuming the last segment is the id)
         const id = path.split('/').pop();
         
-        const response = await fetch(`/api/score/quiz/${id}`);
+        const response = await fetch(`/api/score/data`);
 
         if(!response.ok) {
             throw new Error(`HTTP error. Status: ${response.status}`);
         }
 
-        return await response.json();
+        const scoreData = await response.json();
+        console.log(scoreData[0]);
+        return scoreData;
 
     } catch (error) {
         console.error('Error fetching question:', error);
-        return null;
+        
     }
 };
 
 //render scores dynamically 
 const renderScore = (username, highScore) => {
 
+    console.log(highScore, "highScore");
+    console.log(username, "username");
+
     const scoreRowEl = document.createElement("tr");
-    const usernameEl = document.createElement("td");
+    const usernameEl = document.createElement("th");
     const highScoreEl = document.createElement("td");
 
-    usernameEl.textContent=`username, ${username}`;
-    highScoreEl.textContent=`highScore, ${highScore}`;
+    usernameEl.textContent = `${username}`;
+    highScoreEl.textContent = `${highScore}`;
 
-    usernameEl.append(highScoreEl);
     scoreRowEl.append(usernameEl);
+    scoreRowEl.append(highScoreEl);
     scoreBoardEl.append(scoreRowEl);
 
     var currentQuestion = questions[currentQuestionIndex];
