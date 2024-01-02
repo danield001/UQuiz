@@ -9,7 +9,7 @@
     "seed": "node seeds/seed.js"
   },
   "engines": {
-    "node": "21.x",
+    "node": "v21.1.0",
     "npm": "8.3.1"
   },
   "author": "",
