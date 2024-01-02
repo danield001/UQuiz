@@ -8,6 +8,7 @@
     
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/quiz_style.css">
+    <link rel="stylesheet" href="/css/aos.css">
     <link rel="stylesheet" href="/node_modules/aos/dist/aos.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
      <link
@@ -32,10 +33,10 @@
          </div>
         <div id="navbarBasicExample" class="navbar-menu">
          <div class="navbar-start">
-          <button class="navbar-item home">Home</button>
-          <button class="navbar-item play">Play UQuiz</button>
-          <button class="navbar-item quiz-select">Choose Quiz</button>
-          <button class="navbar-item account">Submit Questions</button>
+          <button class="navbar-item" id="home">Home</button>
+          <button class="navbar-item" id="play">Play UQuiz</button>
+          <button class="navbar-item" id="quiz-select">Choose Quiz</button>
+          <button class="navbar-item" id="account">Submit Questions</button>
         <div class="navbar-end">
          <div class="navbar-item">
 
@@ -71,7 +72,7 @@
     <footer>
 
     </footer>
-    {{#if logged_in}}
+    {{#if (eq loggedIn true)}}
   <script src="/js_1/logout.js"></script>
   {{/if}}
 

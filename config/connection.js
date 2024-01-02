@@ -24,6 +24,7 @@ if (process.env.NODE_ENV === 'production') {
       host: 'localhost',
       dialect: 'mysql',
       port: 3306,
+      logging: true, // Enable logging to console
     }
   );
 }

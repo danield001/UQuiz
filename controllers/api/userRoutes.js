@@ -28,32 +28,34 @@ router.post('/login', async (req, res) => {
                 email_address: req.body.email_address
             },
         });
+
         if (!dbUserData) {
-            res.status(400).json({ message: 'Incorrect Email or Password. Please Try Again' })
-            return;
+            return res.status(400).json({ message: 'Incorrect Email or Password. Please Try Again' });
         }
 
         const validPassword = await dbUserData.checkPassword(req.body.password);
 
         if (!validPassword) {
-            res.status(400).json({ message: 'Incorrect Email or Password. Please Try Again' });
-            return;
+            return res.status(400).json({ message: 'Incorrect Email or Password. Please Try Again' });
         }
 
         try {
             req.session.save(() => {
                 req.session.loggedIn = true;
+                req.session.user_id = dbUserData.id;
+                req.session.user_username = dbUserData.username;
                 console.log('Session saved successfully');
-                res.status(200).json({ user: dbUserData, message: 'You Are Now Logged In' })
+                console.log(req.session);
+                res.status(200).json({ user: dbUserData, message: 'You Are Now Logged In' });
             });
         } catch (err) {
             console.error('Error saving session:', err);
-            res.status(500).json(err);
+            return res.status(500).json({ message: 'Internal Server Error' });
         }
 
     } catch (err) {
         console.log(err);
-        res.status(500).json(err);
+        return res.status(500).json({ message: 'Internal Server Error' });
     }
 });
 
