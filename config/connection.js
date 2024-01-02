@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 require('dotenv').config();
+const mysql2 = require('mysql2'); // Correct package name
 
 let sequelize;
 

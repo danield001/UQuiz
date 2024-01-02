@@ -1,6 +1,10 @@
 # Quiz Application
 
 This is a full-stack application that allows users to take quizzes and test their knowledge on various topics. The application is built using a combination of front-end and back-end technologies to provide an interactive and engaging quiz-taking experience.
+Uquiz is an app that provides users with a wide range of quiz options.
+Members of Uquiz contribute their own questions to our database. 
+Members are able to play pre-made quizzes or customise their own. 
+Users can choose a category and create a quiz or even choose another user and target their questions when designing quizzes to play. Great for finding your quiz-nemesis and challenging yourself!
 
 ## Features
 Our quiz-user member needs to:
@@ -9,8 +13,13 @@ Our quiz-user member needs to:
 - stay engaged by customising the quiz according to their interests.
 - stay engaged by enjoying competition with published scores.
 
-
-
+## Breakdown of tasks and roles
+Seen in Work breakdown Schedule and project timeline
+Change from setting up overall parts to focus on particular pages and the needs of those pages through the combination of files (handlebars, client-side javascript and route)
+## Challenges
+Managing the interaction between the controller and the views
+## Successes
+ A mostly functioning app.
 
 ## Technologies Used
 
