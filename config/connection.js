@@ -1,22 +1,11 @@
 const Sequelize = require('sequelize');
 require('dotenv').config();
-const mysql2 = require('mysql2'); // Correct package name
 
 let sequelize;
 
-if (process.env.NODE_ENV === 'production') {
-  // Use Heroku database URL
-  sequelize = new Sequelize(process.env.DATABASE_URL, {
-    dialect: 'mysql',
-    logging: false, // Disable logging to console
-    dialectOptions: {
-      ssl: {
-        rejectUnauthorized: false,
-      },
-    },
-  });
+if (process.env.JAWSDB_URL) {
+  sequelize = new Sequelize(process.env.JAWSDB_URL);
 } else {
-  // Use local database credentials
   sequelize = new Sequelize(
     process.env.DB_NAME,
     process.env.DB_USER,
@@ -24,8 +13,7 @@ if (process.env.NODE_ENV === 'production') {
     {
       host: 'localhost',
       dialect: 'mysql',
-      port: 3306,
-      logging: true, // Enable logging to console
+      port: 3306
     }
   );
 }
