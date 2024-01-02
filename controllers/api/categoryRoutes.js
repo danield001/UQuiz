@@ -8,7 +8,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const router = require('express').Router();
 
-router.get('/', async (req, res) => {
+router.get('/', withAuth, async (req, res) => {
     try {
         const categoryDisp = await Category.findAll()
         if (!categoryDisp) {

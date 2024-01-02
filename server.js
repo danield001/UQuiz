@@ -14,9 +14,12 @@ const PORT = process.env.PORT || 8080;
 const hbs = exphbs.create({ 
   helpers: {
     eq: function (v1, v2) {
-        return v1 === v2;  
+        return v1 === v2;
     },
-  }
+    json: function (context) {
+      return JSON.stringify(context);
+    },
+}
 });
 
 const sess = {
@@ -42,17 +45,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
+
 app.get('/', (req, res) => {
-  res.render('homepage', { loggedIn: true });
+  const loggedInContext = { loggedIn: req.session.loggedIn || false };
+  res.render('homepage', loggedInContext);
 });
+
+
+
 
 app.use(routes);
 
 // server-side routes
-app.get('/', (req, res) => {
-  res.render('homepage');
-});
-
 app.get('/quiz', (req, res) => {
   res.render('quiz');
 });

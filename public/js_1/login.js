@@ -15,7 +15,7 @@ const loginFormHandler = async (event) => {
             });
 
             if (response.ok) {
-                document.location.replace('/');
+                document.location.replace('/account');
             } else {
                 alert('Failed to Log In');
             }
@@ -31,10 +31,9 @@ const signupFormHandler = async (event) => {
     const username = document.querySelector('#username-signup').value.trim();
     const email_address = document.querySelector('#email-signup').value.trim();
     const password = document.querySelector('#password-signup').value.trim();
-    const t_and_c = document.querySelector('#t-and-c');
 
 
-    if (username && email_address && password, t_and_c === true) {
+    if (username && email_address && password) {
         try {
             const response = await fetch('/api/users', {
                 method: 'POST',
@@ -43,8 +42,8 @@ const signupFormHandler = async (event) => {
             });
 
             if (response.ok) {
-
-                document.location.replace('/');
+                console.log('Sign Up Successful');
+                document.location.replace('/account');
             } else {
                 alert('Failed to Sign Up');
             }
