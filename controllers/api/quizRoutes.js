@@ -1,8 +1,9 @@
 const router = require('express').Router();
 const { Question, Quiz, QuizQuestion, Category } = require('../../models');
+const withAuth = require('../../utils/auth');
 
 //get route for quizData to send to js file to dynamically render
-router.get(`/data/:id`, async (req, res) => {
+router.get(`/data/:id`, withAuth, async (req, res) => {
     try {
 
         const quizData = await Quiz.findByPk(req.params.id, {
